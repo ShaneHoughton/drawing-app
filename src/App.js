@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from "./Layout/Layout";
+import PostContainer from "./Post/PostContainer";
+import Canvas from './Post/NewPost/Canvas';
+import {useSelector} from 'react-redux';
+import { useEffect} from "react";
+import { useDispatch } from "react-redux";
+import { loadPostData } from "./store/postActions";
+
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(loadPostData());
+    }, [dispatch]);
+ 
+  const showModal = useSelector(state=> state.ui.showCanvas);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <div className="App">
+        {showModal && <Canvas />}
+        <PostContainer/>
+       
+      </div>
+    </Layout>
   );
 }
 

@@ -24,8 +24,6 @@ const styles = {
   },
 };
 
-// const canvasHeight = '100%'; // Set desired canvas height as a percentage of the window height
-
 const Canvas = (props) => {
   const [imageUpload, setImageUpload] = useState(null);
   const canvas = useRef();
@@ -47,7 +45,7 @@ const Canvas = (props) => {
         const blob = new Blob([arrayBuffer], { type: mimeString });
 
         // Set image upload state
-        const file = new File([blob], 'sketch.png', { type: 'image/png' });
+        const file = new File([blob], 'sketch', { type: 'image/png' });
         setImageUpload(file);
       });
     }
@@ -57,7 +55,7 @@ const Canvas = (props) => {
     const uploadImage = () => {
       if (!imageUpload) return;
       return new Promise((resolve, reject) => {
-        const imageRef = ref(storage, `images/${v4() + imageUpload.name}`);
+        const imageRef = ref(storage, `images/${imageUpload.name+ Date.now() + v4()}`);
         uploadBytes(imageRef, imageUpload)
           .then(() => {
             resolve();
@@ -84,18 +82,31 @@ const Canvas = (props) => {
     }
   }, [imageUpload, dispatch]);
 
+  console.log(window.innerWidth);
+
+  let CanvasContent = <ReactSketchCanvas
+    style={styles.canvas}
+    height="20rem"
+    strokeWidth={4}
+    strokeColor="blue"
+    ref={canvas}
+  />
+
+  if(window.innerWidth > 400){
+    CanvasContent = <ReactSketchCanvas
+    style={styles.canvas}
+    height="35rem"
+    strokeWidth={4}
+    strokeColor="blue"
+    ref={canvas}
+  />
+  }
+
+
   return (
     <Modal onClose={() => dispatch(uiActions.toggleModal())}>
-      <ReactSketchCanvas
-        style={styles.canvas}
-        height="20rem"
-        strokeWidth={4}
-        strokeColor="blue"
-        ref={canvas}
-      />
-
-      {/* <button onClick={handleSaveImage}>Save Image</button>
-      <button onClick={() => canvas.current.resetCanvas()}>Clear</button> */}
+        
+      {CanvasContent}
       <ButtonRow send={handleSaveImage} 
       clear={() => canvas.current.resetCanvas()}
       undo={() => canvas.current.undo()}

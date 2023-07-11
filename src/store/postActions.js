@@ -14,7 +14,7 @@ export const loadPostData = () => {
         return { url, key: uuidv4() };
       });
       const urls = await Promise.all(promises);
-      return urls;
+      return urls.reverse();
     };
 
     try {

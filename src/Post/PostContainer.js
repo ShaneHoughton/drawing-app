@@ -10,7 +10,11 @@ const PostContainer = () => {
   return (
     <ul className={classes.container}>
        {imageList.map(post=>(
-        <Post key={post.key} url={post.url} createdBy={post.metadata.customMetadata.createdBy}/>
+        <Post 
+        key={post.key} 
+        url={post.url} 
+        createdBy={post.metadata.customMetadata.createdBy} 
+        timeCreated={post.metadata.timeCreated} />
       ))}
     </ul>
    

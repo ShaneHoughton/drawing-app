@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/drawing-app/static/css/main.805a76f8.css",
+    "main.css": "/drawing-app/static/css/main.ec51db4c.css",
     "main.js": "/drawing-app/static/js/main.6fc068b4.js",
     "index.html": "/drawing-app/index.html",
-    "main.805a76f8.css.map": "/drawing-app/static/css/main.805a76f8.css.map",
+    "main.ec51db4c.css.map": "/drawing-app/static/css/main.ec51db4c.css.map",
     "main.6fc068b4.js.map": "/drawing-app/static/js/main.6fc068b4.js.map"
   },
   "entrypoints": [
-    "static/css/main.805a76f8.css",
+    "static/css/main.ec51db4c.css",
     "static/js/main.6fc068b4.js"
   ]
 }

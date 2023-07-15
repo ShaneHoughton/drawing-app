@@ -1,19 +1,40 @@
 import { uiActions } from '../store/ui';
-import {useDispatch} from 'react-redux';
-import classes from './AddButton.module.css';
+import { useDispatch } from 'react-redux';
+import { Button } from "@mui/material";
+import { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-const AddButton = (props) => {
+const AddButton = () => {
   const dispatch = useDispatch();
+  const [isUserVerified, setIsUserVerified] = useState(false);
 
-  const openModalHandler = () =>{
-    dispatch(uiActions.toggleModal());
-  }
+  useEffect(() => {
+    const auth = getAuth();
+    
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.emailVerified) {
+        setIsUserVerified(true);
+      } else {
+        setIsUserVerified(false);
+      }
+    });
+
+  }, []);
+
+  const openModalHandler = () => {
+    if (!isUserVerified) {
+      dispatch(uiActions.openAuth());
+    } else {
+      dispatch(uiActions.openCanvas());
+    }
+  };
 
   return (
-    <button onClick={openModalHandler} className={classes.button}>
-      <span >Add a masterpiece</span>
-      {/* <span className={classes.badge}>hello</span> */}
-    </button>
+    // <button onClick={openModalHandler} className={classes.button}>
+    //   <span>Add a masterpiece</span>
+    // </button>
+    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Add a masterpiece  ✏️</Button>
+    
   );
 };
 

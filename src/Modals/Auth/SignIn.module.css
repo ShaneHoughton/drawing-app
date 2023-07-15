@@ -1,0 +1,18 @@
+.signIn{
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.signIn input{
+  width: 90%;
+}
+
+.signInButton{
+  margin-top: 2rem !important;
+  width: 30%;
+  color: #FEEFFE !important;
+  background-color: #159A9C !important;
+}

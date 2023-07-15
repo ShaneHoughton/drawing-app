@@ -1,5 +1,5 @@
 import { uiActions } from './ui';
-import { listAll, ref, getDownloadURL } from 'firebase/storage';
+import { listAll, ref, getDownloadURL, getMetadata } from 'firebase/storage';
 import { storage } from '../firebase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,18 +7,25 @@ export const loadPostData = () => {
   return async (dispatch) => {
     const imageListRef = ref(storage, 'images/');
 
-    const getImageURLs = async () => {
+    const getImageURLsAndMetadata = async () => {
       const response = await listAll(imageListRef);
+
       const promises = response.items.map(async (item) => {
-        const url = await getDownloadURL(item);
-        return { url, key: uuidv4() };
+        const [url, metadata] = await Promise.all([
+          getDownloadURL(item),
+          getMetadata(item),
+        ]);
+
+        return { url, metadata, key: uuidv4() };
       });
-      const urls = await Promise.all(promises);
-      return urls.reverse();
+
+      const urlsAndMetadata = await Promise.all(promises);
+
+      return urlsAndMetadata.reverse();
     };
 
     try {
-      const imageUrls = await getImageURLs();
+      const imageUrls = await getImageURLsAndMetadata();
       console.log(imageUrls);
       dispatch(uiActions.loadPosts(imageUrls));
     } catch (error) {

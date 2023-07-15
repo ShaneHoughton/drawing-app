@@ -1,6 +1,7 @@
 import Layout from "./Layout/Layout";
 import PostContainer from "./Post/PostContainer";
-import Canvas from './Post/NewPost/Canvas';
+import Canvas from './Modals/Canvas/Canvas';
+import Auth from "./Modals/Auth/AuthModals";
 import {useSelector} from 'react-redux';
 import { useEffect} from "react";
 import { useDispatch } from "react-redux";
@@ -14,12 +15,15 @@ function App() {
     dispatch(loadPostData());
     }, [dispatch]);
  
-  const showModal = useSelector(state=> state.ui.showCanvas);
+  const showCanvas = useSelector(state=> state.ui.showCanvas);
+  const showAuth = useSelector(state=> state.ui.showAuth);
 
   return (
     <Layout>
       <div className="App">
-        {showModal && <Canvas />}
+        {/* TODO: PUT AUTH IN HERE */}
+        {showCanvas && <Canvas />}
+        {showAuth && <Auth/>}
         <PostContainer/>
        
       </div>

@@ -2,10 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name:'ui',
-    initialState:{notification: null, showCanvas: false, posts:[]}, //notification for error
+    initialState:{notification: null, showCanvas: false, showAuth: false, posts:[]}, //notification for error
     reducers: {
-        toggleModal(state){
-            state.showCanvas = !state.showCanvas;
+        openCanvas(state){
+            state.showCanvas = true;
+        },
+
+        closeCanvas(state){
+            state.showCanvas = false;
+        },
+
+        openAuth(state){
+            state.showAuth = true;
+        },
+
+        closeAuth(state){
+            state.showAuth = false;
         },
         
         showNotification(state, action){

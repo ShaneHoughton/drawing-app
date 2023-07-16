@@ -6,6 +6,7 @@ const SignOutButton = () => {
   const signOutHandler = () =>{
     const auth = getAuth();
     signOut(auth);
+    alert("You signed out of your account.")
     console.log(auth.currentUser);
   }
   return (

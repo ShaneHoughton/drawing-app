@@ -35,18 +35,18 @@ const Register = (props) => {
       sendEmailVerification(user, actionCodeSettings)
       .then(()=>{
         console.log("email sent");
+        alert("A verification email was sent to the entered address.")
       })
       .catch((error)=>{
         console.log("error happening")
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode + errorMessage);
+        alert("An error ocdurred. Please try again.")
       })
       
     })
     .catch((error) => {
-      
-
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode + errorMessage);
@@ -63,15 +63,17 @@ const Register = (props) => {
       <form onSubmit={registerHandler} className={classes.signIn}>
         <h3>Register an Account</h3>
         <TextField
-        label="Email" 
-        id="email" 
-        value={email} 
-        onChange={(e) =>setEmail(e.target.value)}/>
-        <TextField
         label="Username"
         id="username" 
         value={username} 
         onChange={(e) =>setUsername(e.target.value)}/>
+
+        <TextField
+        label="Email" 
+        id="email" 
+        value={email} 
+        onChange={(e) =>setEmail(e.target.value)}/>
+        
         <TextField 
         label="Password" 
         id="password" 

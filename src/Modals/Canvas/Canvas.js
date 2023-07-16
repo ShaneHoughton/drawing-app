@@ -11,14 +11,6 @@ import { loadPostData } from '../../store/postActions';
 import { getAuth } from 'firebase/auth';
 import classes from './Canvas.module.css';
 
-const styles = {
-  canvas: {
-    width: '60vh',
-    height: '60vh',
-    border: '2px solid blue',
-    borderRadius: '0.5rem',
-  },
-};
 
 const Canvas = () => {
   const [imageUpload, setImageUpload] = useState(null);
@@ -96,37 +88,25 @@ const Canvas = () => {
     }
   }, [imageUpload, dispatch]);
 
-  console.log(window.innerWidth);
-
-  let CanvasContent = <ReactSketchCanvas
-    style={styles.canvas}
-    // height="20rem"
-    // width="20rem"
-    strokeWidth={4}
-    strokeColor="blue"
-    ref={canvas}
-  />
-
-  // if(window.innerWidth > 500){
-  //   CanvasContent = <ReactSketchCanvas
-  //   style={styles.canvas}
-  //   height="35rem"
-  //   width="35rem"
-  //   strokeWidth={4}
-  //   strokeColor="blue"
-  //   ref={canvas}
-  // />
-  // }
-
-
   return (
     <Modal onClose={()=>{dispatch(uiActions.closeCanvas())}}>
-      {CanvasContent}
+      <div className={classes.border}>
+        <div className={classes['canvas-container']}>
+        <ReactSketchCanvas
+          /* Add your canvas props here */
+          strokeWidth={4}
+          strokeColor="blue"
+          ref={canvas}
+        />
+      </div>
+      <div className={classes['canvas-tools']}>
       <ButtonRow send={handleSaveImage} 
       clear={() => canvas.current.resetCanvas()}
       undo={() => canvas.current.undo()}
       redo={() => canvas.current.redo()}
       />
+      </div>
+      </div>
     </Modal>
   );
 };

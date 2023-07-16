@@ -13,9 +13,12 @@ import Modal from '../Modal';
 const SignIn = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
   const dispatch = useDispatch();
  
+ 
+
   const signInHandler = (e) =>{
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -34,9 +37,10 @@ const SignIn = (props) => {
     })
     .catch((error) => {
       console.error('Error signing in:', error);
-      alert("account does not exist")
+      alert("Please enter a valid email and password")
     });
   }
+
   
   return (
     <Modal onClose={() => dispatch(uiActions.closeAuth())}>

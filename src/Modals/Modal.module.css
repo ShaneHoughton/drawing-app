@@ -3,7 +3,7 @@
   position: fixed;
   overflow: scroll;
   width: 100vw;
-  height: 120vh;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.75);
   transform: translate(-50%, -50%);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -11,19 +11,17 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
-.backdrop{
-  position: fixed;
-  background-color: aqua;
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-}
-
 .content{
-  position: relative;
   margin: auto;
+  margin-top: 5%;
   width: fit-content;
   z-index: 20;
+}
+
+@media (max-width: 414px){
+  .content{
+    margin-top: 25%;
+  }
 }
 
 

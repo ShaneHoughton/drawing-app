@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
+import Box from '@mui/material/Box';
+import PasswordTextfield from './PasswordTextfield';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui';
@@ -60,28 +62,29 @@ const Register = (props) => {
 
   return (
     <Modal onClose={() => dispatch(uiActions.closeAuth())}>
-      <form onSubmit={registerHandler} className={classes.signIn}>
-        <h3>Register an Account</h3>
-        <TextField
-        label="Username"
-        id="username" 
-        value={username} 
-        onChange={(e) =>setUsername(e.target.value)}/>
+      
+        <form onSubmit={registerHandler} className={classes.signIn}>
+          <h3>Register an Account</h3>
+          
+          <TextField
+          label="Username"
+          id="username" 
+          value={username} 
+          onChange={(e) =>setUsername(e.target.value)}/>
 
-        <TextField
-        label="Email" 
-        id="email" 
-        value={email} 
-        onChange={(e) =>setEmail(e.target.value)}/>
-        
-        <TextField 
-        label="Password" 
-        id="password" 
-        value={password} 
-        onChange={(e) =>setPassword(e.target.value)}/>
-        <Button type="submit" className={classes.signInButton}>Register</Button>
-        <Button onClick={props.switchToSignIn}>Sign in</Button>
-      </form>
+          <TextField
+          label="Email" 
+          id="email" 
+          value={email} 
+          onChange={(e) =>setEmail(e.target.value)}/>
+
+          <PasswordTextfield 
+          onChange={(e) =>setPassword(e.target.value)} 
+          value={password}/>
+
+          <Button type="submit" className={classes.signInButton}>Register</Button>
+          <Button onClick={props.switchToSignIn}>Sign in</Button>
+        </form>
     </Modal>
 
   )

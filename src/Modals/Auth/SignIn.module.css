@@ -1,9 +1,7 @@
 .signIn{
   display: flex;
   flex-direction: column;
-  margin: auto;
-  margin-top: 25%;
-  padding-bottom: 1rem;
+  padding: 1rem;
   background-color: #FEEFFE;
   align-items: center;
   gap: 10px;
@@ -16,10 +14,7 @@
 
 
 @media (min-width: 1280px){
-  /* Your CSS styles for iPhone in landscape mode go here */
-  .signIn {
-    /* padding: 1rem 2rem; */
-    
+  .signIn {    
     width: 30vw;
   }
 
@@ -29,12 +24,8 @@
   }
 }
 
-/* Target iPhone (all models) in landscape mode */
 @media (max-width: 1280px){
-  /* Your CSS styles for iPhone in landscape mode go here */
   .signIn {
-    /* padding: 1rem 2rem; */
-    
     width: 60vw;
   }
 
@@ -45,9 +36,7 @@
 }
 
 @media (max-width: 540px){
-  /* Your CSS styles for iPhone in landscape mode go here */
   .signIn {
-    /* padding: 1rem 2rem; */
     
     width: 80vw;
   }
@@ -57,10 +46,6 @@
   
   }
 }
-
-
-
-
 
 
 .signInButton{

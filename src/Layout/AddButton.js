@@ -30,11 +30,7 @@ const AddButton = () => {
   };
 
   return (
-    // <button onClick={openModalHandler} className={classes.button}>
-    //   <span>Add a masterpiece</span>
-    // </button>
-    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Add a masterpiece  ✏️</Button>
-    
+    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Create ✏️</Button>
   );
 };
 

@@ -1,8 +1,7 @@
-.canvas-container{
+/* .canvas-container{
   width: 40vw;
   height: 40vw;
-  
-}
+} */
 
 .canvas-tools{
   background-color: #002333;
@@ -20,9 +19,6 @@
     width: 40vw;
     height: 40vw;
   }
-  .border{
-    margin-top: 15%;
-  }
 }
 
 
@@ -31,18 +27,12 @@
     width: 80vw;
     height: 80vw;
   }
-  .border{
-    margin-top: 60%;
-  }
 }
 
 @media (max-height: 400px){
   .canvas-container{
     width: 80vh;
     height: 80vh;
-  }
-  .border{
-    margin-top: 5%;
   }
 }
 

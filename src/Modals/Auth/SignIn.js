@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
+import PasswordTextfield from './PasswordTextfield';
+import Box from '@mui/material/Box';
+
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui';
 import { getAuth, setPersistence, browserLocalPersistence} from 'firebase/auth';
@@ -13,7 +16,6 @@ import Modal from '../Modal';
 const SignIn = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
   const dispatch = useDispatch();
  
@@ -51,11 +53,11 @@ const SignIn = (props) => {
         id="email" 
         value={email} 
         onChange={(e) =>setEmail(e.target.value)}/>
-        <TextField 
-        label="Password" 
-        id="password" 
-        value={password} 
-        onChange={(e) =>setPassword(e.target.value)}/>
+       
+        <PasswordTextfield 
+          onChange={(e) =>setPassword(e.target.value)} 
+          value={password}/>
+
         <Button type="submit" className={classes.signInButton}>Sign In</Button>
         <Button onClick={props.switchToRegister}>Register account</Button>
       </form>

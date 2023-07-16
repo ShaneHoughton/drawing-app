@@ -5,7 +5,7 @@ import classes from './MainHeader.module.css';
 const MainHeader = (props) => {
   return (
     <header className={classes.header}>
-      <h1>Skech.it</h1>
+      <h1>Sketchi.io</h1>
       <nav>
         <ul>
           <li>

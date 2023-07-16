@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
 import PasswordTextfield from './PasswordTextfield';
+import CustomTextfield from './CustomTexfield';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui';
 import classes from './SignIn.module.css';
 import Modal from '../Modal';
 
-const actionCodeSettings = {
+const actionCodeSettings = {//TODO: Move this
   // URL you want to redirect back to. The domain (www.example.com) for this
   // URL must be in the authorized domains list in the Firebase Console.
   url: 'https://shanehoughton.github.io/drawing-app/',
-  // This must be true.
   handleCodeInApp: false
 };
 
@@ -52,7 +53,7 @@ const Register = (props) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode + errorMessage);
-      console.log("account with that email already exists")
+      alert("Inavlid email or password.")
       // ..
     });
     console.log("finish")
@@ -64,21 +65,24 @@ const Register = (props) => {
     <Modal onClose={() => dispatch(uiActions.closeAuth())}>
       
         <form onSubmit={registerHandler} className={classes.signIn}>
-          <h3>Register an Account</h3>
+          <h3>Register an account</h3>
+
+          <CustomTextfield
+          label={"Username"} 
+          onChange={(e) =>setUsername(e.target.value)} 
+          value={username}
+          adornment={<PermIdentityIcon/>}
+          />
           
-          <TextField
-          label="Username"
-          id="username" 
-          value={username} 
-          onChange={(e) =>setUsername(e.target.value)}/>
-
-          <TextField
-          label="Email" 
-          id="email" 
-          value={email} 
-          onChange={(e) =>setEmail(e.target.value)}/>
-
+          <CustomTextfield
+          label={"Email"} 
+          onChange={(e) =>setEmail(e.target.value)} 
+          value={email}
+          adornment={<MailOutlineIcon/>}
+          />
+       
           <PasswordTextfield 
+          label={'Password'}
           onChange={(e) =>setPassword(e.target.value)} 
           value={password}/>
 

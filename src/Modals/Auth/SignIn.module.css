@@ -9,7 +9,7 @@
 }
 
 .signIn input{
-  width: 90%;
+  width: 10rem !important;
 }
 
 
@@ -18,10 +18,10 @@
     width: 30vw;
   }
 
-  .signIn input{
+  /* .signIn input{
     width: 300px !important;
   
-  }
+  } */
 }
 
 @media (max-width: 1280px){
@@ -29,10 +29,10 @@
     width: 60vw;
   }
 
-  .signIn input{
+  /* .signIn input{
     width: 300px !important;
   
-  }
+  } */
 }
 
 @media (max-width: 540px){
@@ -41,10 +41,10 @@
     width: 80vw;
   }
 
-  .signIn input{
+  /* .signIn input{
     width: 150px !important;
   
-  }
+  } */
 }
 
 

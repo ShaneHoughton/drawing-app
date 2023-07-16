@@ -2,15 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import classes from './Modal.module.css';
 
-const Backdrop = (props)=>{
-    return <div className={classes.backdrop} onClick={props.onClick}></div>
-}
 
 const ModalOverlay = (props)=>{
+  const stopPropagationHandler = (event) => {
+    event.stopPropagation();
+  };
+
     return (
-        <div className={classes.modal}>
-            <div className={classes.content}>{props.children}</div>
+        <div className={classes.modal} onClick={()=>{props.onClick()}}>
+          <div className={classes.content} onClick={stopPropagationHandler}>{props.children}</div>
         </div>
+        
     )
 }
 
@@ -19,9 +21,7 @@ const portalElement = document.getElementById('overlays')
 const Modal=(props)=> {
   return (
     <>
-    {ReactDOM.createPortal(<Backdrop onClick={props.onClose}/>, portalElement)}
-    {ReactDOM.createPortal(<ModalOverlay >{props.children}</ModalOverlay>, portalElement)}
-    
+    {ReactDOM.createPortal(<ModalOverlay onClick={props.onClose} >{props.children}</ModalOverlay>, portalElement)}    
     </>
   )
 }

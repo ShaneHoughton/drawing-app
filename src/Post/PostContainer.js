@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const PostContainer = () => {
   const imageList = useSelector(state=> state.ui.posts);
-  console.log(imageList[0]);
   return (
     <ul className={classes.container}>
        {imageList.map(post=>(

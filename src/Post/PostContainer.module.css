@@ -16,7 +16,7 @@
   color: #000000;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .container img {
     width: 18rem;
     height: 18rem;

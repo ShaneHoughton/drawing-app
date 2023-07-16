@@ -1,14 +1,67 @@
 .signIn{
-  margin-top: 10%;
   display: flex;
   flex-direction: column;
+  margin: auto;
+  margin-top: 25%;
+  padding-bottom: 1rem;
+  background-color: #FEEFFE;
   align-items: center;
   gap: 10px;
+  border-radius: 14px;
 }
 
 .signIn input{
   width: 90%;
 }
+
+
+@media (min-width: 1280px){
+  /* Your CSS styles for iPhone in landscape mode go here */
+  .signIn {
+    /* padding: 1rem 2rem; */
+    
+    width: 30vw;
+  }
+
+  .signIn input{
+    width: 300px !important;
+  
+  }
+}
+
+/* Target iPhone (all models) in landscape mode */
+@media (max-width: 1280px){
+  /* Your CSS styles for iPhone in landscape mode go here */
+  .signIn {
+    /* padding: 1rem 2rem; */
+    
+    width: 60vw;
+  }
+
+  .signIn input{
+    width: 300px !important;
+  
+  }
+}
+
+@media (max-width: 540px){
+  /* Your CSS styles for iPhone in landscape mode go here */
+  .signIn {
+    /* padding: 1rem 2rem; */
+    
+    width: 80vw;
+  }
+
+  .signIn input{
+    width: 150px !important;
+  
+  }
+}
+
+
+
+
+
 
 .signInButton{
   margin-top: 2rem !important;

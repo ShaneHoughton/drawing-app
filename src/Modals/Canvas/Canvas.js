@@ -9,17 +9,12 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { loadPostData } from '../../store/postActions';
 import { getAuth } from 'firebase/auth';
+import classes from './Canvas.module.css';
 
 const styles = {
-  container: {
-    width: '100%',
-    height: '60vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   canvas: {
-    width: '100%',
+    width: '60vh',
+    height: '60vh',
     border: '2px solid blue',
     borderRadius: '0.5rem',
   },
@@ -105,21 +100,23 @@ const Canvas = () => {
 
   let CanvasContent = <ReactSketchCanvas
     style={styles.canvas}
-    height="20rem"
+    // height="20rem"
+    // width="20rem"
     strokeWidth={4}
     strokeColor="blue"
     ref={canvas}
   />
 
-  if(window.innerWidth > 400){
-    CanvasContent = <ReactSketchCanvas
-    style={styles.canvas}
-    height="35rem"
-    strokeWidth={4}
-    strokeColor="blue"
-    ref={canvas}
-  />
-  }
+  // if(window.innerWidth > 500){
+  //   CanvasContent = <ReactSketchCanvas
+  //   style={styles.canvas}
+  //   height="35rem"
+  //   width="35rem"
+  //   strokeWidth={4}
+  //   strokeColor="blue"
+  //   ref={canvas}
+  // />
+  // }
 
 
   return (

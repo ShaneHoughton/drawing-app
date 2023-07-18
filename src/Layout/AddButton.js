@@ -30,7 +30,7 @@ const AddButton = () => {
   };
 
   return (
-    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Create ✏️</Button>
+    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Create✏️</Button>
   );
 };
 

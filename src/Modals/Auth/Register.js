@@ -25,6 +25,10 @@ const Register = (props) => {
   
   const registerHandler = (e) =>{
     e.preventDefault();
+    if(username.length > 20){
+      alert("Username is too long. Must be less than 20 characters") //TODO: improve this.
+      return
+    }
     console.log(email);
     console.log(password);
 

@@ -10,7 +10,7 @@ const SignOutButton = () => {
     console.log(auth.currentUser);
   }
   return (
-    <Button style={{color: '#DEEFE7'}} onClick={signOutHandler}>Sign Out ➡️</Button>
+    <Button style={{color: '#DEEFE7'}} onClick={signOutHandler}>Sign Out➡️</Button>
   )
 }
 

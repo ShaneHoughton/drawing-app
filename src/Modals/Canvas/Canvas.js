@@ -12,12 +12,16 @@ import { getAuth } from 'firebase/auth';
 import classes from './Canvas.module.css';
 
 
+
+
 const Canvas = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const canvas = useRef();
   const dispatch = useDispatch();
 
+  
   const handleSaveImage = () => {
+    
     
     console.log('sending image');
     if (canvas.current) {

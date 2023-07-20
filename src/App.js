@@ -1,3 +1,4 @@
+
 import Layout from "./Layout/Layout";
 import PostContainer from "./Post/PostContainer";
 import Canvas from './Modals/Canvas/Canvas';
@@ -8,10 +9,30 @@ import { useDispatch } from "react-redux";
 import { loadPostData } from "./store/postActions";
 import classes from './App.module.css';
 
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from "./firebase";
+
+// require('dotenv').config();
+
+
 function App() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
+    // const tryThis = async () =>{
+    //   try {
+    //     const docRef = await addDoc(collection(db, "users"), {
+    //       first: "Ada",
+    //       last: "Lovelace",
+    //       born: 1815
+    //     });
+    //     console.log("Document written with ID: ", docRef.id);
+    //   } catch (e) {
+    //     console.error("Error adding document: ", e);
+    //   }
+    //   }
+    //   tryThis();
+
     dispatch(loadPostData());
     }, [dispatch]);
  
@@ -23,6 +44,8 @@ function App() {
   } else {
     document.documentElement.style.overflow = ''; // Restore scrolling of the entire page
   }
+  
+  
 
   return (
     <>

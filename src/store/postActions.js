@@ -1,33 +1,37 @@
 import { uiActions } from './ui';
-import { listAll, ref, getDownloadURL, getMetadata } from 'firebase/storage';
-import { storage } from '../firebase';
-import { v4 as uuidv4 } from 'uuid';
+import { collection, getDocs, query, where } from "firebase/firestore"; 
+import { db } from '../firebase';
 
 export const loadPostData = () => {
   return async (dispatch) => {
-    const imageListRef = ref(storage, 'images/');
-
-    const getImageURLsAndMetadata = async () => {
-      const response = await listAll(imageListRef);
-
-      const promises = response.items.map(async (item) => {
-        const [url, metadata] = await Promise.all([
-          getDownloadURL(item),
-          getMetadata(item),
-        ]);
-
-        return { url, metadata, key: uuidv4() };
+    
+    const getItemsFromCollection = (collectionName) => {
+      return new Promise((resolve, reject) => {
+        const collectionRef = collection(db, collectionName);
+        const q = query(collectionRef, where("reported", "==", false));
+        getDocs(q)
+          .then((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+              // "doc" represents a document in the collection
+              // You can access its data using "doc.data()"
+              items.push({
+                id: doc.id,
+                ...doc.data()
+              });
+            });
+            resolve(items);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
-
-      const urlsAndMetadata = await Promise.all(promises);
-
-      return urlsAndMetadata.reverse();
     };
 
     try {
-      const imageUrls = await getImageURLsAndMetadata();
-      console.log(imageUrls);
-      dispatch(uiActions.loadPosts(imageUrls));
+      const items = await getItemsFromCollection("Posts");
+      console.log(items)
+      dispatch(uiActions.loadPosts(items.reverse()));
     } catch (error) {
       console.log('Error:', error);
     }

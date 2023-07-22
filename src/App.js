@@ -21,10 +21,12 @@ function App() {
   useEffect(()=>{
     // const tryThis = async () =>{
     //   try {
-    //     const docRef = await addDoc(collection(db, "users"), {
-    //       first: "Ada",
-    //       last: "Lovelace",
-    //       born: 1815
+    //     const docRef = await addDoc(collection(db, "Posts"), {
+    //       title: "Second",
+    //       creator: "Nilbog",
+    //       date: "7/19/2023",
+    //       likedBy: ["Stinky Seth"],
+    //       imgLink: "null"
     //     });
     //     console.log("Document written with ID: ", docRef.id);
     //   } catch (e) {

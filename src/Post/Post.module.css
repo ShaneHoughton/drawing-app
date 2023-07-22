@@ -1,0 +1,38 @@
+.post-items{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  /* background-color: black; */
+}
+
+h2{
+  padding: 0;
+  margin: 1% 0;
+  width: 100%;
+}
+.post-info{
+  width: max-content;
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+.post-info h4{
+  margin: 5% 0;
+}
+
+.post-buttons{
+  flex-direction: row;
+  margin-top: -.5rem;
+}
+
+.post-buttons button{
+  padding: 0;
+  align-self: end;
+}
+
+.labeled-button{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}

@@ -7,6 +7,7 @@
   align-items: center;
   gap: 3rem;
   color: #DEEFE7;
+  width: 30rem;
 }
 
 .container img {
@@ -21,5 +22,8 @@
   .container img {
     width: 18rem;
     height: 18rem;
+  }
+  .container{
+    width: 18rem;
   }
 }

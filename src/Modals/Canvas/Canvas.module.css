@@ -14,6 +14,10 @@
   border-radius: 14px;
 }
 
+.border input{
+  width: 100% !important;
+}
+
 @media (min-width: 1280px){
   .canvas-container{
     width: 40vw;

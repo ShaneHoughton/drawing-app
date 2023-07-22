@@ -5,15 +5,19 @@ import { useSelector } from 'react-redux';
 
 
 const PostContainer = () => {
-  const imageList = useSelector(state=> state.ui.posts);
+  const postList = useSelector(state=> state.ui.posts);
+  console.log(postList);
   return (
     <ul className={classes.container}>
-       {imageList.map(post=>(
+       {postList.map(post=>(
+      <li key={post.id}>
         <Post 
-        key={post.key} 
-        url={post.url} 
-        createdBy={post.metadata.customMetadata.createdBy} 
-        timeCreated={post.metadata.timeCreated} />
+        id={post.id} 
+        url={post.imgLink} 
+        title={post.title}
+        createdBy={post.creator} 
+        timeCreated={post.date} />
+      </li>
       ))}
     </ul>
    

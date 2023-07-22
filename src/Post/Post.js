@@ -4,6 +4,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton from "@mui/material/IconButton";
 import { useState, useEffect } from "react";
 import classes from "./Post.module.css";
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../store/ui';
 
 import {
   collection,
@@ -20,6 +22,7 @@ import { getAuth } from "firebase/auth";
 const Post = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(null);
+  const dispatch = useDispatch();
   const postId = props.id;
 
   const likePost = (auth) => {
@@ -61,7 +64,7 @@ const Post = (props) => {
         unlikePost(auth);
       }
     } catch (error) {
-      alert("log in.");
+      dispatch(uiActions.openAuth());
       console.log(error);
     }
   };

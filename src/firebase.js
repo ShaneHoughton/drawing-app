@@ -13,6 +13,11 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
+export const actionCodeSettings = {
+  url: 'https://shanehoughton.github.io/drawing-app/',
+  handleCodeInApp: false
+};
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);

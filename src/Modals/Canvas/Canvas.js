@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Modal from '../Modal';
 import ButtonRow from './ButtonRow';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
@@ -10,119 +10,83 @@ import { v4 } from 'uuid';
 import { loadPostData } from '../../store/postActions';
 import { getAuth } from 'firebase/auth';
 import classes from './Canvas.module.css';
-
-
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from '../../firebase';
 import TextField from '@mui/material/TextField';
 
 
-
-
 const Canvas = () => {
-  const [imageUpload, setImageUpload] = useState(null);
   const [imageTitle, setImageTitle] = useState('My Masterpiece')
-  const [isUploadCompleted, setIsUploadCompleted] = useState(false);
   const canvas = useRef();
   const dispatch = useDispatch();
-
   
-  const handleSaveImage = () => {
-    console.log('sending image');
-    if(imageTitle.length < 29){
+  
+  const createImageFile = async (canvas) =>{
+    const data = await canvas.current.exportImage('png');
+    const byteString = atob(data.split(',')[1]);
+    const mimeString = data.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: mimeString });
+    const file = new File([blob], 'sketch', { type: 'image/png' });
+    return file;
+  }
+
+  const handleSaveImageProto = async () =>{
+    if(imageTitle.length > 29){
       alert("too long");
+      return
+    }
+    if(!canvas.current){
+      return
     }
 
-    if (canvas.current) {
-      
+    const auth = getAuth();
+    console.log(auth.currentUser);
+    const userId = auth.currentUser.uid; // Replace with actual user ID
+    const createdBy = auth.currentUser.displayName;
+    const timestamp = new Date().getTime();
+    const name = v4();
+    const file = await createImageFile(canvas);
+    const imageRef = ref(storage, `images/${timestamp}_${createdBy}_${userId}_${name}`);
 
-      const auth = getAuth();
-      console.log(auth.currentUser);
-      const userId = auth.currentUser.uid; // Replace with actual user ID
-      const createdBy = auth.currentUser.displayName;
-      const timestamp = new Date().getTime();
-      canvas.current.exportImage('svg').then((data) => {
-        const byteString = atob(data.split(',')[1]);
-        const mimeString = data.split(',')[0].split(':')[1].split(';')[0];
-        const arrayBuffer = new ArrayBuffer(byteString.length);
-        const uint8Array = new Uint8Array(arrayBuffer);
-
-        for (let i = 0; i < byteString.length; i++) {
-          uint8Array[i] = byteString.charCodeAt(i);
-        }
-
-        const blob = new Blob([arrayBuffer], { type: mimeString });
-
-        // Set image upload state
-        const file = new File([blob], 'sketch', { type: 'image/png' });
-        // const file = new File(data, 'sketch', { type: 'image/svg' });
-        setImageUpload({ name: v4(), file, userId, createdBy, timestamp });
-      });
-    }
-  
-  };
-
-  
-
-  useEffect(() => {
-    const uploadImage = () => {
-      if (!imageUpload) return;
-      return new Promise((resolve, reject) => {
-        const imageRef = ref(storage, `images/${imageUpload.timestamp}_${imageUpload.createdBy}_${imageUpload.userId}_${imageUpload.name}`);
-    
-        const metadata = {
-          customMetadata: {
-            userId: imageUpload.userId,
-            timestamp: imageUpload.timestamp,
-            createdBy: imageUpload.createdBy
-          },
-        };
-    
-        uploadBytes(imageRef, imageUpload.file, metadata)
-          .then(() => {
-            getDownloadURL(imageRef).then((downloadURL)=>{
-              addDoc(collection(db, "Posts"), {
-                title: imageTitle,
-                creator: imageUpload.createdBy,
-                date: imageUpload.timestamp,
-                likedBy: [],
-                imgLink: downloadURL,
-                reported: false
-              });
-            })
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-
-      });
+    const metadata = {
+      customMetadata: {
+        userId: userId,
+        timestamp: timestamp,
+        createdBy: createdBy
+      },
     };
-    
-    const handleImageUpload = async () => {
-      try {
-        await uploadImage();
-        dispatch(loadPostData());
-        canvas.current.clearCanvas();
-        dispatch(uiActions.closeCanvas());
-      } catch (error) {
-        console.error('Error uploading image:', error);
+
+    try{
+      await uploadBytes(imageRef, file, metadata);
       }
-    };
+      catch(error){
+        console.log(error);
+        alert("There was an error uploading your image!");
+        return
+      }
 
-    if (imageUpload) {
-      handleImageUpload().then(()=>{
-        setIsUploadCompleted(true);
-      })
-    }
-  }, [imageUpload, imageTitle, dispatch]);
+    const downloadURL = await getDownloadURL(imageRef);
 
-  useEffect(() => {
-    // When isUploadCompleted becomes true, we refresh the page to show the uploaded image
-    if (isUploadCompleted) {
-      window.location.reload();
-    }
-  }, [isUploadCompleted]);
+    await addDoc(collection(db, "Posts"), {
+      title: imageTitle,
+      creator: createdBy,
+      date: timestamp,
+      likedBy: [],
+      imgLink: downloadURL,
+      reported: false
+    })
+
+    dispatch(loadPostData())
+    dispatch(uiActions.closeCanvas()); 
+  }
+
 
   return (
     <Modal onClose={()=>{dispatch(uiActions.closeCanvas())}}>
@@ -136,7 +100,7 @@ const Canvas = () => {
         />
       </div>
       <div className={classes['canvas-tools']}>
-      <ButtonRow send={handleSaveImage} 
+      <ButtonRow send={handleSaveImageProto} 
       clear={() => canvas.current.resetCanvas()}
       undo={() => canvas.current.undo()}
       redo={() => canvas.current.redo()}

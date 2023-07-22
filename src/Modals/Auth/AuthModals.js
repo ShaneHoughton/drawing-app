@@ -1,8 +1,10 @@
 import {useState} from 'react'; 
 import SignIn from './SignIn';
 import Register from './Register';
+import { getAuth} from "firebase/auth";
 
 const AuthModals = () => {
+  const auth = getAuth();
   const [authState, setAuthState] = useState('signin');
 
   const switchToRegister = () =>{
@@ -12,10 +14,12 @@ const AuthModals = () => {
   const switchToSignIn = () =>{
     setAuthState('signin');
   }
-  let authContent = <SignIn switchToRegister={switchToRegister}/>
+
+  let authContent = <SignIn auth={auth} switchToRegister={switchToRegister}/>
   if(authState === 'register'){ 
-    authContent = <Register switchToSignIn={switchToSignIn}/>
+    authContent = <Register auth={auth} switchToSignIn={switchToSignIn} />
   }
+  
   
   return (
     <>

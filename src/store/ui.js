@@ -34,8 +34,7 @@ const uiSlice = createSlice({
                 action.payload = [];
             }
             state.posts = action.payload;
-            
-            
+            console.log("getting posts", state.posts);
             
         }
     }

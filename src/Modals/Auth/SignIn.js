@@ -3,13 +3,15 @@ import { Button } from "@mui/material";
 import PasswordTextfield from "./PasswordTextfield";
 import CustomTextfield from "./CustomTexfield";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui";
 import {
-  getAuth,
   setPersistence,
   browserLocalPersistence,
+  sendEmailVerification,
 } from "firebase/auth";
+import { actionCodeSettings } from "../../firebase";
 import classes from "./SignIn.module.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Modal from "../Modal";
@@ -17,7 +19,9 @@ import Modal from "../Modal";
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const auth = getAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [reverify, setReverify] = useState(false);
+  const auth = props.auth;
   const dispatch = useDispatch();
 
   const signInHandler = (e) => {
@@ -28,9 +32,10 @@ const SignIn = (props) => {
         console.log("User signed in:", auth.currentUser.emailVerified);
         const user = auth.currentUser;
         if (!user.emailVerified) {
-          alert(
-            "Account is not yet verified. An email has been sent to verify."
+          setErrorMessage(
+            "Account is not yet verified. Accept the verification link sent to your email."
           );
+          setReverify(true);
         } else {
           console.log(user.email);
           setPersistence(auth, browserLocalPersistence);
@@ -40,7 +45,26 @@ const SignIn = (props) => {
       })
       .catch((error) => {
         console.error("Error signing in:", error);
-        alert("Please enter a valid email and password");
+        setErrorMessage("Account information is not recognized.");
+      });
+  };
+
+  const resendEmailHandler = () => {
+    sendEmailVerification(props.auth.currentUser, actionCodeSettings)
+      .then(() => {
+        console.log("email sent");
+        dispatch(uiActions.closeAuth());
+      })
+      .catch((error) => {
+        if (error.code === "auth/too-many-requestsFirebase") {
+          alert("Please wait a minute before resending another email.");
+          dispatch(uiActions.closeAuth());
+        }
+        console.log("error happening");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + errorMessage);
+        setErrorMessage("An error occurred. Please retry.");
       });
   };
 
@@ -51,21 +75,40 @@ const SignIn = (props) => {
 
         <CustomTextfield
           label={"Email"}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrorMessage(null);
+          }}
           value={email}
           adornment={<MailOutlineIcon />}
         />
 
         <PasswordTextfield
           label={"Password"}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setErrorMessage(null);
+          }}
           value={password}
         />
-
-        <Button type="submit" className={classes.signInButton}>
-          Sign In
-        </Button>
-        <Button onClick={props.switchToRegister}>Register account</Button>
+        {errorMessage && (
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        )}
+        {!reverify && (
+          <>
+            <Button type="submit" className={classes.signInButton}>
+              Sign In
+            </Button>
+            <Button onClick={props.switchToRegister}>Register account</Button>
+          </>
+        )}
+        {reverify && (
+          <Button onClick={resendEmailHandler} className={classes.signInButton}>
+            Resend email
+          </Button>
+        )}
       </form>
     </Modal>
   );

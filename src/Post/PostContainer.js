@@ -1,12 +1,12 @@
-import React from 'react'
 import Post from './Post';
 import classes from './PostContainer.module.css';
-import { useSelector } from 'react-redux';
-
+import { useSelector} from 'react-redux';
 
 const PostContainer = () => {
   const postList = useSelector(state=> state.ui.posts);
-  console.log(postList);
+  // console.log(postList);
+  
+  
   return (
     <ul className={classes.container}>
        {postList.map(post=>(

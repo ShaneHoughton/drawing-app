@@ -11,6 +11,7 @@
   position: sticky;
   top: 0;
   border-bottom: #B4BEC9 .5px solid;
+  z-index: 100;
 }
 
 .header h1 {

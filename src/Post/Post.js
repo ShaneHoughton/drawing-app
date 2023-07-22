@@ -21,7 +21,6 @@ const Post = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(null);
   const postId = props.id;
-  console.log(props.id);
 
   const likePost = (auth) => {
     addDoc(collection(db, "Likes"), {
@@ -80,7 +79,6 @@ const Post = (props) => {
       const coll = collection(db, "Likes");
       const q = query(coll, where("postId", "==", postId));
       const snapshot = await getCountFromServer(q);
-      console.log("count: ", snapshot.data().count);
       setLikes(snapshot.data().count);
     };
 
@@ -93,12 +91,10 @@ const Post = (props) => {
         if (!docSnap.empty) {
           // If there are matching documents, it means the user has liked the post
           docSnap.forEach((doc) => {
-            console.log('Document data:', doc.data());
             setIsLiked(true);
           });
         } else {
           // If there are no matching documents, it means the user hasn't liked the post
-          console.log('User has not liked the post.');
           setIsLiked(false);
           
         }

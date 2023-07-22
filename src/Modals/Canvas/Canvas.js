@@ -29,8 +29,9 @@ const Canvas = () => {
   
   const handleSaveImage = () => {
     console.log('sending image');
-    if(imageTitle.length < 50){
-      
+    if(imageTitle.length < 29){
+      alert("too long");
+    }
 
     if (canvas.current) {
       
@@ -58,7 +59,7 @@ const Canvas = () => {
         setImageUpload({ name: v4(), file, userId, createdBy, timestamp });
       });
     }
-  }
+  
   };
 
   
@@ -85,7 +86,8 @@ const Canvas = () => {
                 creator: imageUpload.createdBy,
                 date: imageUpload.timestamp,
                 likedBy: [],
-                imgLink: downloadURL
+                imgLink: downloadURL,
+                reported: false
               });
             })
             resolve();

@@ -1,5 +1,5 @@
 import { uiActions } from './ui';
-import { collection, getDocs, query, where } from "firebase/firestore"; 
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore"; 
 import { db } from '../firebase';
 
 export const loadPostData = () => {
@@ -8,7 +8,7 @@ export const loadPostData = () => {
     const getItemsFromCollection = (collectionName) => {
       return new Promise((resolve, reject) => {
         const collectionRef = collection(db, collectionName);
-        const q = query(collectionRef, where("reported", "==", false));
+        const q = query(collectionRef, where("reported", "==", false), orderBy('date', 'asc'));
         getDocs(q)
           .then((querySnapshot) => {
             const items = [];

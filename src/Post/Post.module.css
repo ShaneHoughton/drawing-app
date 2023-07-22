@@ -10,6 +10,9 @@ h2{
   padding: 0;
   margin: 1% 0;
   width: 100%;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* flex-direction: column; */
 }
 .post-info{
   width: max-content;

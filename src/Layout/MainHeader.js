@@ -26,8 +26,8 @@ const MainHeader = (props) => {
   if(signedIn){
     authButton =(
       <Routes>
-            <Route path="/user" element={<SignOutButton />}/>
-            <Route path="/" element={<ProfileButton />}/>
+            <Route path="/drawing-app/user" element={<SignOutButton />}/>
+            <Route path="/drawing-app" element={<ProfileButton />}/>
       </Routes>
     )
   }

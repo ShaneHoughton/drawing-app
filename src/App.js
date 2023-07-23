@@ -28,7 +28,7 @@ function App() {
           {showAuth && <Auth/>}
             <Routes>
               <Route path="/drawing-app" element={<Home/>}/>
-              <Route path="/user" element={<UserProfile/>}/>
+              <Route path="/drawing-app/user" element={<UserProfile/>}/>
             </Routes>
 
         </div>

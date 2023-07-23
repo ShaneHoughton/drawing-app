@@ -10,7 +10,7 @@ const ProfileButton = () => {
   const navigate = useNavigate();
   
   const handleClick = () =>{
-    navigate('/user');
+    navigate('/drawing-app/user');
   }
 
   useEffect(()=>{

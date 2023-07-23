@@ -1,10 +1,9 @@
 import {useState} from 'react'; 
 import SignIn from './SignIn';
 import Register from './Register';
-import { getAuth} from "firebase/auth";
+import { auth } from '../../firebase';
 
 const AuthModals = () => {
-  const auth = getAuth();
   const [authState, setAuthState] = useState('signin');
 
   const switchToRegister = () =>{

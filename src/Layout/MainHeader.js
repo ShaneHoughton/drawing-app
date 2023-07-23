@@ -1,8 +1,30 @@
 import AddButton from './AddButton';
-import SignOutButton from './SignOutButton';
+import ProfileButton from './ProfileButton';
+import SignInButton from './SignInButton';
 import classes from './MainHeader.module.css';
+import { auth } from "../firebase";
+import {useState, useEffect} from 'react';
 
 const MainHeader = (props) => {
+  const [signedIn, setSignedIn] = useState(auth.currentUser !== null);
+
+  useEffect(()=>{
+    const updateSignedIn = auth.onAuthStateChanged((user) => {
+      setSignedIn(user !== null);
+    });
+
+    // Unsubscribe from the listener when the component unmounts
+    return () => updateSignedIn();
+  }, [])
+
+  let authButton = (
+    <SignInButton auth={props.auth} />
+  );
+
+  if (signedIn){
+    authButton = <ProfileButton/>
+  }
+
   return (
     <header className={classes.header}>
       <h1>Sketchi.io</h1>
@@ -12,7 +34,7 @@ const MainHeader = (props) => {
             <AddButton />
           </li>
           <li>
-            <SignOutButton auth={props.auth} />
+            {authButton}
           </li>
         </ul>
       </nav>

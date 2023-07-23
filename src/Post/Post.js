@@ -1,80 +1,30 @@
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
-import IconButton from "@mui/material/IconButton";
+import LikeButton from "./LikeButton";
 import { useState, useEffect } from "react";
 import classes from "./Post.module.css";
-import { useDispatch } from 'react-redux';
-import { uiActions } from '../store/ui';
 import { auth } from "../firebase";
 import {
   collection,
-  addDoc,
   query,
   where,
-  deleteDoc,
-  getDocs,
   getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-const Post = (props) => { // TODO: refactor this...
-  const [isLiked, setIsLiked] = useState(false);
+const Post = (props) => {
   const [likes, setLikes] = useState(null);
-  const dispatch = useDispatch();
   const postId = props.id;
   const currentUser = auth.currentUser; 
-
-  const likePost = () => { //Like button should be its own component?
-    addDoc(collection(db, "Likes"), {
-      postId: props.id,
-      timestamp: Date.now(),
-      userId: currentUser.uid,
-      username: currentUser.displayName,
-    }).then(() => {
-      setIsLiked(true);
-    });
-  };
-
-  const unlikePost = async () => {
-    try {
-      const collectionRef = collection(db, "Likes");
-      const q = query(
-        collectionRef,
-        where("userId", "==", currentUser.uid),
-        where("postId", "==", postId)
-      );
-      const querySnapshot = await getDocs(q); //There could be duplicates
-      querySnapshot.forEach((doc) => {
-        deleteDoc(doc.ref).then(()=>{
-          setIsLiked(false);
-        });
-      })
-    } catch (error) {
-      console.error("Error unliking post:", error);
-    }
-  };
-
-  const handleLikeButton = () => {
-    if(!currentUser){
-      dispatch(uiActions.openAuth());
-      return;
-    }
-    
-    if (!isLiked) {
-      likePost();
-      return
-    }
-    unlikePost();
-    
-   
-  };
 
   let date = new Date(props.timeCreated).toLocaleDateString("en-US", {
     month: "2-digit",
     day: "2-digit",
     year: "numeric",
   });
+
+  const changeLike = (wasLiked) =>{//doing this so we can make one less request and change value on the UI.
+    wasLiked ? setLikes(likes + 1) : setLikes(likes - 1); 
+    if(likes < 0){setLikes(0)};
+  }
 
   useEffect(() => {
     const getLikes = async () => {
@@ -83,29 +33,9 @@ const Post = (props) => { // TODO: refactor this...
       const snapshot = await getCountFromServer(q);
       setLikes(snapshot.data().count);
     };
-
-    const checkIfUserLiked = async () => {
-      if(currentUser) {
-        const coll = collection(db, 'Likes');
-        const q = query(coll, where('userId', '==', currentUser.uid), where('postId', '==', postId));
-        const docSnap = await getDocs(q);
-  
-        if (!docSnap.empty) {
-          // If there are matching documents, it means the user has liked the post
-          docSnap.forEach((doc) => {
-            setIsLiked(true);
-          });
-        } else {
-          // If there are no matching documents, it means the user hasn't liked the post
-          setIsLiked(false);
-          
-        }
-      }
-    };
-
     getLikes();
-    checkIfUserLiked();
-  }, [postId, isLiked, likes, currentUser]);
+
+  }, [postId, currentUser]);
 
   return (
     <>
@@ -118,13 +48,7 @@ const Post = (props) => { // TODO: refactor this...
         </div>
         <div className={classes["post-buttons"]}>
           <div className={classes["labeled-button"]}>
-            <IconButton
-              color="secondary"
-              onClick={handleLikeButton}
-              style={{ marginTop: "0" }}>
-              {!isLiked && <FavoriteBorderIcon fontSize="large" />}
-              {isLiked && <FavoriteIcon fontSize="large" />}
-            </IconButton>
+            <LikeButton postId={postId} onLike={changeLike}/>
             <span>{likes} Likes</span>
           </div>
         </div>

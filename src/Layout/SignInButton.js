@@ -10,8 +10,8 @@ const SignInButton = () => {
   }
 
   return (
-    <Button style={{ color: '#DEEFE7' }} onClick={handleSignIn}>
-      {"Sign In➡️"}
+    <Button style={{ color: '#DEEFE7', fontWeight: 'bold' }} onClick={handleSignIn}>
+      {"Sign In ⬅️"}
     </Button>
   );
 };

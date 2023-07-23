@@ -1,15 +1,12 @@
 import { uiActions } from './ui';
-import { collection, getDocs, getDoc, query, where, orderBy } from "firebase/firestore"; 
-import { db } from '../firebase';
+import { getDocs, getDoc } from "firebase/firestore"; 
 
-export const loadPostData = () => {
+export const loadPostData = (query) => {
   return async (dispatch) => {
     
-    const getItemsFromCollection = (collectionName) => {
+    const getItemsFromCollection = () => {
       return new Promise((resolve, reject) => {
-        const collectionRef = collection(db, collectionName);
-        const q = query(collectionRef, where("reported", "==", false), orderBy('date', 'desc'));
-        getDocs(q)
+        getDocs(query)
           .then((querySnapshot) => {
             const items = [];
             querySnapshot.forEach((doc) => {
@@ -29,7 +26,7 @@ export const loadPostData = () => {
     };
 
     try {
-      const items = await getItemsFromCollection("Posts");
+      const items = await getItemsFromCollection();
       dispatch(uiActions.loadPosts(items));
     } catch (error) {
       console.log('Error:', error);

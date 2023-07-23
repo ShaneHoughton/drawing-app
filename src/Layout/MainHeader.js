@@ -1,13 +1,17 @@
-import AddButton from './AddButton';
+import AddButton from './CreateButton';
 import ProfileButton from './ProfileButton';
 import SignInButton from './SignInButton';
+import SignOutButton from './SignOutButton';
 import classes from './MainHeader.module.css';
 import { auth } from "../firebase";
 import {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
 
 const MainHeader = (props) => {
   const [signedIn, setSignedIn] = useState(auth.currentUser !== null);
-
+  const navigate = useNavigate();
   useEffect(()=>{
     const updateSignedIn = auth.onAuthStateChanged((user) => {
       setSignedIn(user !== null);
@@ -17,17 +21,21 @@ const MainHeader = (props) => {
     return () => updateSignedIn();
   }, [])
 
-  let authButton = (
-    <SignInButton auth={props.auth} />
-  );
+  let authButton = <SignInButton />
 
-  if (signedIn){
-    authButton = <ProfileButton/>
+  if(signedIn){
+    authButton =(
+      <Routes>
+            <Route path="/user" element={<SignOutButton />}/>
+            <Route path="/" element={<ProfileButton />}/>
+      </Routes>
+    )
   }
+
 
   return (
     <header className={classes.header}>
-      <h1>Sketchi.io</h1>
+      <h1 onClick={()=>{navigate('/')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
       <nav>
         <ul>
           <li>

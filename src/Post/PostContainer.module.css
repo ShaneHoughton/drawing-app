@@ -8,6 +8,7 @@
   gap: 3rem;
   color: #DEEFE7;
   width: 30rem;
+  animation: slide-down 300ms ease-out forwards;
 }
 
 .container img {
@@ -25,5 +26,17 @@
   }
   .container{
     width: 18rem;
+  }
+}
+
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

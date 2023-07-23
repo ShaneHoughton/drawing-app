@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 
-const AddButton = () => {
+const CreateButton = () => {
   const dispatch = useDispatch();
   const [isUserVerified, setIsUserVerified] = useState(false);
 
@@ -30,8 +30,8 @@ const AddButton = () => {
   };
 
   return (
-    <Button style={{color: '#DEEFE7'}} onClick={openModalHandler}>Create✏️</Button>
+    <Button style={{color: '#DEEFE7', fontWeight: 'bold' }} onClick={openModalHandler}>Create ✏️</Button>
   );
 };
 
-export default AddButton;
+export default CreateButton;

@@ -1,29 +1,16 @@
 
 import Layout from "./Layout/Layout";
-import PostContainer from "./Post/PostContainer";
 import Canvas from './Modals/Canvas/Canvas';
 import Auth from "./Modals/Auth/AuthModals";
 import {useSelector} from 'react-redux';
-import { useEffect} from "react";
-import { useDispatch } from "react-redux";
-import { loadPostData } from "./store/postActions";
-import classes from './App.module.css';
-
-
-// require('dotenv').config();
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from "./Pages/Home";
+import UserProfile from "./Pages/UserProfile";
 
 function App() {
-  const dispatch = useDispatch();
-  // TODO Let's move auth here
-  useEffect(()=>{
-    console.log("refreshing")
-    dispatch(loadPostData());
-    }, [dispatch]);
- 
   const showCanvas = useSelector(state=> state.ui.showCanvas);
   const showAuth = useSelector(state=> state.ui.showAuth);
-
+  
   if(showCanvas || showAuth){
     document.documentElement.style.overflow = 'hidden'; // Prevent scrolling of the entire page
   } else {
@@ -31,19 +18,22 @@ function App() {
   }
   
   
-
   return (
     <>
-    
-    <Layout>
-      <div className="App">
-        {/* TODO: PUT AUTH IN HERE */}
-        {showCanvas && <Canvas />}
-        {showAuth && <Auth/>}
-        <PostContainer className={classes.App}/>
-       
-      </div>
-    </Layout>
+    <Router basename="/drawing-app">
+      <Layout>
+        <div className="App">
+          {/* TODO: PUT AUTH IN HERE */}
+          {showCanvas && <Canvas />}
+          {showAuth && <Auth/>}
+            <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/user" element={<UserProfile/>}/>
+            </Routes>
+
+        </div>
+      </Layout>
+    </Router>
     </>
   );
 }

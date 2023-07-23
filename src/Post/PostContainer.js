@@ -3,10 +3,19 @@ import classes from './PostContainer.module.css';
 import { useSelector} from 'react-redux';
 import { auth } from '../firebase';
 import { memo } from "react";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadPostData } from '../store/postActions';
 
 const PostContainer = (props) => {
+  const dispatch = useDispatch();
   const postList = useSelector(state=> state.ui.posts);
-  
+  const query = props.query; // needs to be a firebase query
+
+  useEffect(()=>{
+    console.log("refreshing")
+    dispatch(loadPostData(query));
+    }, [dispatch, query]);
   
   return (
     <ul className={classes.container}>

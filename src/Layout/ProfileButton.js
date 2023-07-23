@@ -21,7 +21,7 @@ const ProfileButton = () => {
       } else {
         // User is signed out
         // Redirect to the homepage
-        navigate('/');
+        navigate('/drawing-app');
       }
     });
     return () => unsubscribe();

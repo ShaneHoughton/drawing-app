@@ -23,7 +23,7 @@ const UserProfile = () => {
       } else {
         // User is signed out
         // Redirect to the homepage
-        navigate('/'); // Assuming you have a login route
+        navigate('/drawing-app');
       }
     });
     return () => unsubscribe();

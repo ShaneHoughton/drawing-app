@@ -20,14 +20,14 @@ function App() {
   
   return (
     <>
-    <Router basename="/drawing-app">
+    <Router>
       <Layout>
         <div className="App">
           {/* TODO: PUT AUTH IN HERE */}
           {showCanvas && <Canvas />}
           {showAuth && <Auth/>}
             <Routes>
-              <Route path="/" element={<Home/>}/>
+              <Route path="/drawing-app" element={<Home/>}/>
               <Route path="/user" element={<UserProfile/>}/>
             </Routes>
 

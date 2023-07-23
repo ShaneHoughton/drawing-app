@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
     name:'auth',
-    initialState:{auth: undefined}, //notification for error
+    initialState:{auth: null}, //notification for error
     reducers: {
         Login(state){
           state.loggedIn = true;

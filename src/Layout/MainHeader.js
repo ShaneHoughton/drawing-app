@@ -12,7 +12,7 @@ const MainHeader = (props) => {
             <AddButton />
           </li>
           <li>
-            <SignOutButton />
+            <SignOutButton auth={props.auth} />
           </li>
         </ul>
       </nav>

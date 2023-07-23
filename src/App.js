@@ -9,32 +9,15 @@ import { useDispatch } from "react-redux";
 import { loadPostData } from "./store/postActions";
 import classes from './App.module.css';
 
-import { collection, addDoc } from "firebase/firestore"; 
-import { db } from "./firebase";
 
 // require('dotenv').config();
 
 
 function App() {
   const dispatch = useDispatch();
-
+  // TODO Let's move auth here
   useEffect(()=>{
-    // const tryThis = async () =>{
-    //   try {
-    //     const docRef = await addDoc(collection(db, "Posts"), {
-    //       title: "Second",
-    //       creator: "Nilbog",
-    //       date: "7/19/2023",
-    //       likedBy: ["Stinky Seth"],
-    //       imgLink: "null"
-    //     });
-    //     console.log("Document written with ID: ", docRef.id);
-    //   } catch (e) {
-    //     console.error("Error adding document: ", e);
-    //   }
-    //   }
-    //   tryThis();
-
+    console.log("refreshing")
     dispatch(loadPostData());
     }, [dispatch]);
  

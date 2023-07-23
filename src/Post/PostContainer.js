@@ -1,17 +1,19 @@
 import Post from './Post';
 import classes from './PostContainer.module.css';
 import { useSelector} from 'react-redux';
+import { auth } from '../firebase';
+import { memo } from "react";
 
-const PostContainer = () => {
+const PostContainer = (props) => {
   const postList = useSelector(state=> state.ui.posts);
-  // console.log(postList);
   
   
   return (
     <ul className={classes.container}>
        {postList.map(post=>(
       <li key={post.id}>
-        <Post 
+        <Post
+        currentUser={auth.currentUser} 
         id={post.id} 
         url={post.imgLink} 
         title={post.title}
@@ -24,4 +26,4 @@ const PostContainer = () => {
   )
 }
 
-export default PostContainer
+export default memo(PostContainer);

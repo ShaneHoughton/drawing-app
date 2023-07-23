@@ -7,12 +7,12 @@ import { uiActions } from '../../store/ui';
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import { v4 } from 'uuid';
-import { loadPostData } from '../../store/postActions';
-import { getAuth } from 'firebase/auth';
+import { auth } from '../../firebase';
 import classes from './Canvas.module.css';
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from '../../firebase';
 import TextField from '@mui/material/TextField';
+import { AddUploadedPost } from '../../store/postActions';
 
 
 const Canvas = () => {
@@ -37,7 +37,7 @@ const Canvas = () => {
     return file;
   }
 
-  const handleSaveImageProto = async () =>{
+  const handleSaveImage = async () =>{
     if(imageTitle.length > 29){
       alert("too long");
       return
@@ -46,7 +46,6 @@ const Canvas = () => {
       return
     }
 
-    const auth = getAuth();
     console.log(auth.currentUser);
     const userId = auth.currentUser.uid; // Replace with actual user ID
     const createdBy = auth.currentUser.displayName;
@@ -74,7 +73,7 @@ const Canvas = () => {
 
     const downloadURL = await getDownloadURL(imageRef);
 
-    await addDoc(collection(db, "Posts"), {
+    const docRef = await addDoc(collection(db, "Posts"), {
       title: imageTitle,
       creator: createdBy,
       date: timestamp,
@@ -83,7 +82,10 @@ const Canvas = () => {
       reported: false
     })
 
-    dispatch(loadPostData())
+    // dispatch(loadPostData())// ADD IT HERERERERER
+    console.log(docRef)
+    dispatch(AddUploadedPost(docRef));
+   
     dispatch(uiActions.closeCanvas()); 
   }
 
@@ -100,7 +102,7 @@ const Canvas = () => {
         />
       </div>
       <div className={classes['canvas-tools']}>
-      <ButtonRow send={handleSaveImageProto} 
+      <ButtonRow send={handleSaveImage} 
       clear={() => canvas.current.resetCanvas()}
       undo={() => canvas.current.undo()}
       redo={() => canvas.current.redo()}

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import classes from "./Post.module.css";
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui';
-
+import { auth } from "../firebase";
 import {
   collection,
   addDoc,
@@ -17,31 +17,31 @@ import {
   getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { getAuth } from "firebase/auth";
 
-const Post = (props) => {
+const Post = (props) => { // TODO: refactor this...
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(null);
   const dispatch = useDispatch();
   const postId = props.id;
+  const currentUser = auth.currentUser; 
 
-  const likePost = (auth) => {
+  const likePost = () => { //Like button should be its own component?
     addDoc(collection(db, "Likes"), {
       postId: props.id,
       timestamp: Date.now(),
-      userId: auth.currentUser.uid,
-      username: auth.currentUser.displayName,
+      userId: currentUser.uid,
+      username: currentUser.displayName,
     }).then(() => {
       setIsLiked(true);
     });
   };
 
-  const unlikePost = async (auth) => {
+  const unlikePost = async () => {
     try {
       const collectionRef = collection(db, "Likes");
       const q = query(
         collectionRef,
-        where("userId", "==", auth.currentUser.uid),
+        where("userId", "==", currentUser.uid),
         where("postId", "==", postId)
       );
       const querySnapshot = await getDocs(q); //There could be duplicates
@@ -56,17 +56,18 @@ const Post = (props) => {
   };
 
   const handleLikeButton = () => {
-    const auth = getAuth();
-    try {
-      if (!isLiked) {
-        likePost(auth);
-      } else {
-        unlikePost(auth);
-      }
-    } catch (error) {
+    if(!currentUser){
       dispatch(uiActions.openAuth());
-      console.log(error);
+      return;
     }
+    
+    if (!isLiked) {
+      likePost();
+      return
+    }
+    unlikePost();
+    
+   
   };
 
   let date = new Date(props.timeCreated).toLocaleDateString("en-US", {
@@ -76,8 +77,6 @@ const Post = (props) => {
   });
 
   useEffect(() => {
-    const auth = getAuth();
-
     const getLikes = async () => {
       const coll = collection(db, "Likes");
       const q = query(coll, where("postId", "==", postId));
@@ -86,9 +85,9 @@ const Post = (props) => {
     };
 
     const checkIfUserLiked = async () => {
-      try {
+      if(currentUser) {
         const coll = collection(db, 'Likes');
-        const q = query(coll, where('userId', '==', auth.currentUser.uid), where('postId', '==', postId));
+        const q = query(coll, where('userId', '==', currentUser.uid), where('postId', '==', postId));
         const docSnap = await getDocs(q);
   
         if (!docSnap.empty) {
@@ -101,19 +100,16 @@ const Post = (props) => {
           setIsLiked(false);
           
         }
-      } catch (error) {
-        console.error('Error checking if user liked the post:', error);
       }
     };
 
     getLikes();
     checkIfUserLiked();
-  }, [postId, isLiked, likes]);
+  }, [postId, isLiked, likes, currentUser]);
 
   return (
     <>
       <img src={props.url} alt={props.title} />
-      {/*probably not the best way to handle alt*/}
       <h2>{props.title}</h2>
       <div className={classes["post-items"]}>
         <div className={classes["post-info"]}>
@@ -125,8 +121,7 @@ const Post = (props) => {
             <IconButton
               color="secondary"
               onClick={handleLikeButton}
-              style={{ marginTop: "0" }}
-            >
+              style={{ marginTop: "0" }}>
               {!isLiked && <FavoriteBorderIcon fontSize="large" />}
               {isLiked && <FavoriteIcon fontSize="large" />}
             </IconButton>
@@ -138,4 +133,4 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+export default  Post;

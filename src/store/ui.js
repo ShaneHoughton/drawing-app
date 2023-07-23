@@ -36,6 +36,12 @@ const uiSlice = createSlice({
             state.posts = action.payload;
             console.log("getting posts", state.posts);
             
+        },
+
+        addPost(state, action){
+            // console.log(">",action.payload)
+            state.posts.unshift(action.payload);
+            console.log("push post", state.posts);
         }
     }
 })

@@ -1,5 +1,5 @@
 import { uiActions } from './ui';
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore"; 
+import { collection, getDocs, getDoc, query, where, orderBy } from "firebase/firestore"; 
 import { db } from '../firebase';
 
 export const loadPostData = () => {
@@ -36,3 +36,28 @@ export const loadPostData = () => {
     }
   };
 };
+
+export const AddUploadedPost = (docRef) =>{
+  return async (dispatch) => {
+    const addItem = (docRef) =>{
+      return new Promise((resolve, reject) => {
+        getDoc(docRef).then((docSnap)=>{
+          // console.log(">", docSnap.data())
+          resolve({id:docSnap.id, ...docSnap.data()});
+        }).catch((error)=>{
+          console.log(error);
+          reject(error);
+        })
+        }
+      );
+    }
+
+    try {
+      const item = await addItem(docRef);
+      dispatch(uiActions.addPost(item));
+    } catch (error) {
+      console.log('Error:', error);
+
+  }
+  }
+}

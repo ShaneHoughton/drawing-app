@@ -1,0 +1,9 @@
+.mobile-nav-bar{
+  display: none;
+}
+
+@media (max-width: 575px) {
+.mobile-nav-bar{
+  display: inline;
+}
+}

@@ -26,9 +26,12 @@ const UserProfile = () => {
         navigate('/drawing-app');
       }
     });
+    localStorage.setItem('navPosition', 2);
     return () => unsubscribe();
 
   }, [auth, navigate]);
+
+
 
   if(!username){
     return <LoadingSpinner />

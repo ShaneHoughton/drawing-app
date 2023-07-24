@@ -32,10 +32,18 @@ const MainHeader = (props) => {
     )
   }
 
+  // let mainHeading = (
+  //     <Routes>
+  //       <Route path="/drawing-app/user" element={<h2>Your Gallery</h2>}/>
+  //       <Route path="/drawing-app" element={<h2>Today's Gallery</h2>}/>
+  //     </Routes>
+  // )
+
 
   return (
     <header className={classes.header}>
       <h1 onClick={()=>{navigate('/drawing-app')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
+      {/* {mainHeading} */}
       <nav>
         <ul>
           <li>

@@ -77,9 +77,9 @@ const  MobileNavBar = () => {
         }}
         style={{ backgroundColor: '#002333', borderRadius: '14px', borderColor:"#FFFFFF"}}
       >
-        <BottomNavigationAction label="Home" icon={<>🏠</>} sx={navStyle}/>
-        <BottomNavigationAction label="Create" icon={<>✏️</>} sx={navStyle}/>
-        <BottomNavigationAction label="Profile" icon={<>👨‍🎨</>} sx={navStyle}/>
+        <BottomNavigationAction label="HOME" icon={<>🏠</>} sx={navStyle}/>
+        <BottomNavigationAction label="CREATE" icon={<>✏️</>} sx={navStyle}/>
+        <BottomNavigationAction label="PROFILE" icon={<>👨‍🎨</>} sx={navStyle}/>
       </BottomNavigation>
     </Box>
   );

@@ -48,6 +48,10 @@
   min-width: fit-content;
 }
 
+.mobile-signin{
+  display: none;
+}
+
 @media (max-width: 575px) {
   .header{
     gap: 1rem;
@@ -70,5 +74,12 @@
 
   .header nav{
     display: none;
+  }
+
+  .mobile-signin{
+    display: inline;
+    position: absolute;
+    width: max-content;
+    margin-left: 65%;
   }
 }

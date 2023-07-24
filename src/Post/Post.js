@@ -40,7 +40,7 @@ const Post = (props) => {
   return (
     <>
       <img src={props.url} alt={props.title} />
-      <h2>{props.title}</h2>
+      <div className={classes['post-title']}>{props.title}</div>
       <div className={classes["post-items"]}>
         <div className={classes["post-info"]}>
           <h4>{props.createdBy}</h4>

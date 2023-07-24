@@ -2,6 +2,7 @@ import AddButton from './CreateButton';
 import ProfileButton from './ProfileButton';
 import SignInButton from './SignInButton';
 import SignOutButton from './SignOutButton';
+import HomeButton from './HomeButton';
 import classes from './MainHeader.module.css';
 import { auth } from "../firebase";
 import {useState, useEffect} from 'react';
@@ -21,7 +22,8 @@ const MainHeader = (props) => {
     return () => updateSignedIn();
   }, [])
 
-  let authButton = <SignInButton />
+  let authButton = <SignInButton />;
+  let mobileAuthButton = <SignInButton />;
 
   if(signedIn){
     authButton =(
@@ -30,22 +32,23 @@ const MainHeader = (props) => {
             <Route path="/drawing-app" element={<ProfileButton />}/>
       </Routes>
     )
+
+    mobileAuthButton = (
+      <SignOutButton />
+    )
   }
 
-  // let mainHeading = (
-  //     <Routes>
-  //       <Route path="/drawing-app/user" element={<h2>Your Gallery</h2>}/>
-  //       <Route path="/drawing-app" element={<h2>Today's Gallery</h2>}/>
-  //     </Routes>
-  // )
+
 
 
   return (
     <header className={classes.header}>
       <h1 onClick={()=>{navigate('/drawing-app')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
-      {/* {mainHeading} */}
       <nav>
         <ul>
+          <li>
+            <HomeButton />
+          </li>
           <li>
             <AddButton />
           </li>
@@ -54,6 +57,9 @@ const MainHeader = (props) => {
           </li>
         </ul>
       </nav>
+      <div className={classes['mobile-signin']}>
+        {mobileAuthButton}
+      </div>
     </header>
   );
 };

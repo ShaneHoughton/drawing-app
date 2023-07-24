@@ -6,19 +6,24 @@
   /* background-color: black; */
 }
 
-h2{
+/* h2{
   padding: 0;
   margin: 1% 0;
   width: 100%;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* flex-direction: column; */
+ 
+} */
+
+.post-title{
+  font-size: 1.5em;
+  font-weight: bold;
 }
+
 .post-info{
   width: max-content;
   display: flex;
   text-align: left;
   flex-direction: column;
+  color: rgba(222, 239, 231, .6);
 }
 .post-info h4{
   margin: 5% 0;
@@ -38,4 +43,12 @@ h2{
   display: flex;
   text-align: center;
   flex-direction: column;
+  color: rgba(222, 239, 231, .6);
+}
+
+
+@media (max-width: 575px) {
+  .post-title{
+    font-size: 1.2rem;
+  }
 }

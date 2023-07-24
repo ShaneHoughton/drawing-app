@@ -38,8 +38,8 @@ const Canvas = () => {
   }
 
   const handleSaveImage = async () =>{
-    if(imageTitle.length > 29){
-      alert("too long");
+    if(imageTitle.length > 37){
+      alert("Your title is too long");
       return
     }
     if(!canvas.current){
@@ -109,6 +109,7 @@ const Canvas = () => {
       />
       </div>
       <TextField
+          inputProps={{ maxLength: 37 }}
           style={{width:'100%', backgroundColor:"rgba(255, 255, 255, 0.8)"}}
           id="outlined-required"
           label="Title"

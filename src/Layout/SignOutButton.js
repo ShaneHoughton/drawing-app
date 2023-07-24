@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../store/ui";
 
 const SignOutButton = () => {
-  
+  const dispatch = useDispatch();
   const handleSignOut = () => {
-    signOut(auth);
+    // signOut(auth);
+    dispatch(uiActions.openSignOut());
   }
 
   return (

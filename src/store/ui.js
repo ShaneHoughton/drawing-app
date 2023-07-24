@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name:'ui',
-    initialState:{notification: null, showCanvas: false, showAuth: false, posts:[]}, //notification for error
+    initialState:{notification: null, showCanvas: false, showAuth: false, showSignOut: false, posts:[]}, //notification for error
     reducers: {
         openCanvas(state){
             state.showCanvas = true;
@@ -18,6 +18,14 @@ const uiSlice = createSlice({
 
         closeAuth(state){
             state.showAuth = false;
+        },
+
+        openSignOut(state){
+            state.showSignOut = true;
+        },
+
+        closeSignOut(state){
+            state.showSignOut = false;
         },
         
         showNotification(state, action){

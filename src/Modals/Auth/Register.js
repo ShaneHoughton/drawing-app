@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui";
-import classes from "./SignIn.module.css";
+import classes from "./Auth.module.css";
 import Modal from "../Modal";
 import { actionCodeSettings } from "../../firebase";
 

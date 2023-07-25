@@ -5,7 +5,6 @@ import { uiActions } from "../store/ui";
 const SignOutButton = () => {
   const dispatch = useDispatch();
   const handleSignOut = () => {
-    // signOut(auth);
     dispatch(uiActions.openSignOut());
   }
 

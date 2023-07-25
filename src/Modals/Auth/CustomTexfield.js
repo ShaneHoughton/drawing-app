@@ -13,6 +13,7 @@ const CustomTextfield = (props) => {
             type={props.type}
             value={props.value}
             onChange={props.onChange}
+            inputProps={{ maxLength: props.maxLength }}
             endAdornment={
               <InputAdornment position="end">
                 {props.adornment}

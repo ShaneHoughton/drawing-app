@@ -4,7 +4,7 @@ import PasswordTextfield from "./PasswordTextfield";
 import CustomTextfield from "./CustomTexfield";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import Typography from "@mui/material/Typography"
+import Typography from "@mui/material/Typography";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -15,6 +15,8 @@ import { uiActions } from "../../store/ui";
 import classes from "./Auth.module.css";
 import Modal from "../Modal";
 import { actionCodeSettings } from "../../firebase";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -23,42 +25,62 @@ const Register = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
 
-  const registerHandler = (e) => {
+  const registerHandler = async (e) => {
     e.preventDefault();
     if (username.length > 20) {
-      alert("Username is too long. Must be less than 20 characters"); //TODO: improve this.
+      alert("Username is too long. Must be less than 20 characters");
       return;
     }
-    console.log(email);
-    console.log(password);
+    try {
+      if (!(await usernameAvailabile())) {
+        setErrorMessage("That username is taken.");
+        return;
+      }
 
-    createUserWithEmailAndPassword(props.auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        updateProfile(user, { displayName: username });
-        sendEmailVerification(user, actionCodeSettings)
-          .then(() => {
-            console.log("email sent");
-            alert("A verification email was sent to the entered address.");
-            dispatch(uiActions.closeAuth());
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode + errorMessage);
-            setErrorMessage("An error occurred. Please retry.");
-          });
-      })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          setErrorMessage("Email is already in use.");
-        } else {
-          setErrorMessage("Please enter a valid email.");
-        }
+      const userCredential = await createUserWithEmailAndPassword(
+        props.auth,
+        email,
+        password
+      ); //create user account
+      const user = userCredential.user;
+
+      await addDoc(collection(db, "Users"), {
+        //register the username
+        uid: user.uid,
+        username: username,
       });
+
+      updateProfile(user, { displayName: username }); //set the username to the user
+
+      await sendEmailVerification(user, actionCodeSettings); //send verification
+      console.log("email sent");
+      alert("A verification email was sent to the entered address.");
+      dispatch(uiActions.closeAuth());
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        setErrorMessage("Email is already in use.");
+      } else {
+        setErrorMessage("Please enter a valid email.");
+      }
+    }
     console.log("finish");
+  };
+
+  const usernameAvailabile = async () => {
+    console.log("hello?");
+    const usersRef = collection(db, "Users");
+    const q = query(usersRef, where("username", "==", username));
+    try {
+      const snapShot = await getDocs(q);
+      snapShot.forEach((doc) => {
+        console.log(doc.data());
+      });
+      console.log(snapShot.empty);
+      return snapShot.empty;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   };
 
   return (
@@ -74,6 +96,7 @@ const Register = (props) => {
           }}
           value={username}
           adornment={<PermIdentityIcon />}
+          maxLength={20}
         />
 
         <CustomTextfield

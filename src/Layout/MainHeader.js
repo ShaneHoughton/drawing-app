@@ -15,7 +15,7 @@ const MainHeader = (props) => {
   const navigate = useNavigate();
   useEffect(()=>{
     const updateSignedIn = auth.onAuthStateChanged((user) => {
-      setSignedIn(user !== null);
+      setSignedIn(user !== null && user.emailVerified);
     });
 
     // Unsubscribe from the listener when the component unmounts

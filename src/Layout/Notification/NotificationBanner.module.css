@@ -1,0 +1,50 @@
+.notification{
+  width: 100%;
+  position: fixed;
+  text-align: center;
+  color:#DEEFE7;
+  line-height: 3rem;
+  font-weight: bold;
+  z-index: 9;
+}
+
+.success{
+  background-color: #159A9C;
+}
+
+.fail{
+  background-color: rgb(170, 61, 61);
+}
+
+.hide{
+  display: block;
+  animation: slide-up 300ms ease-out forwards;
+}
+
+.show{
+  display: block;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+}

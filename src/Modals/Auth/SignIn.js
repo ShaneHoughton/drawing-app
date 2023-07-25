@@ -28,7 +28,6 @@ const SignIn = (props) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        // const user = userCredential.user;
         console.log("User signed in:", auth.currentUser.emailVerified);
         const user = auth.currentUser;
         if (!user.emailVerified) {
@@ -40,7 +39,7 @@ const SignIn = (props) => {
           console.log(user.email);
           setPersistence(auth, browserLocalPersistence);
           dispatch(uiActions.closeAuth());
-          window.location.reload();
+          dispatch(uiActions.showNotification({status: 'success', message:'User successfully signed in.'}))
         }
       })
       .catch((error) => {
@@ -57,10 +56,9 @@ const SignIn = (props) => {
       })
       .catch((error) => {
         if (error.code === "auth/too-many-requestsFirebase") {
-          alert("Please wait a minute before resending another email.");
           dispatch(uiActions.closeAuth());
+          dispatch(uiActions.showNotification({status: 'fail', message:'Please wait a minute before resending another email.'}))
         }
-        console.log("error happening");
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode + errorMessage);

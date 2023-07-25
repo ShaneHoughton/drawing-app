@@ -31,9 +31,12 @@ const uiSlice = createSlice({
         showNotification(state, action){
             state.notification = {
                 status : action.payload.status,
-                title : action.payload.title,
                 message : action.payload.message
             }
+        },
+
+        closeNotification(state){
+            state.notification = null;
         },
 
         loadPosts(state, action){
@@ -47,7 +50,6 @@ const uiSlice = createSlice({
         },
 
         addPost(state, action){
-            // console.log(">",action.payload)
             state.posts.unshift(action.payload);
             console.log("push post", state.posts);
         }

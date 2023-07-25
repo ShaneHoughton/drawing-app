@@ -4,10 +4,11 @@ import SignInButton from './SignInButton';
 import SignOutButton from './SignOutButton';
 import HomeButton from './HomeButton';
 import classes from './MainHeader.module.css';
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
+import Notification from '../Notification/NotificationBanner';
 
 
 const MainHeader = (props) => {
@@ -42,6 +43,7 @@ const MainHeader = (props) => {
 
 
   return (
+    <>
     <header className={classes.header}>
       <h1 onClick={()=>{navigate('/drawing-app')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
       <nav>
@@ -61,6 +63,8 @@ const MainHeader = (props) => {
         {mobileAuthButton}
       </div>
     </header>
+    <Notification />
+    </>
   );
 };
 

@@ -10,12 +10,19 @@ import classes from "./Auth.module.css";
 const SignOutModal = () => {
   const dispatch = useDispatch();
 
-  const signOutHandler = () =>{
-    signOut(auth);
-  };
 
   const close = () =>{
-    dispatch(uiActions.closeSignOut())
+    dispatch(uiActions.closeSignOut());
+  };
+
+  const signOutHandler = () =>{
+    try{
+      signOut(auth);
+      close();
+      dispatch(uiActions.showNotification({status:'success', message: 'User successfully signed out.'}));
+    }catch(error){
+      dispatch(uiActions.showNotification({status: 'fail', message: error.message}));
+    }
   };
 
   return (

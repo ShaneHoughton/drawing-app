@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { uiActions } from '../store/ui';
+import { uiActions } from '../../store/ui';
 import { useDispatch } from 'react-redux';
 
 const SignInButton = () => {

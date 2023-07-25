@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import MainHeader from './MainHeader';
+import MainHeader from './MainHeader/MainHeader';
 import MobileNavBar from './MobileNavBar';
 
 const Layout = (props) => {

@@ -24,17 +24,21 @@ const LikeButton = (props) => {
   const dispatch = useDispatch();
 
   const likePost = () => { //Like button should be its own component?
-    addDoc(collection(db, "Likes"), {
-      postId: postId,
-      timestamp: Date.now(),
-      userId: currentUser.uid,
-      username: currentUser.displayName,
-    }).then(() => {
-      setIsLiked(true);
-      props.onLike(true);
-    }).catch((error)=>{
-      console.log(error);
-    });
+    try{
+      addDoc(collection(db, "Likes"), {
+        postId: postId,
+        timestamp: Date.now(),
+        userId: currentUser.uid,
+        username: currentUser.displayName,
+      }).then(() => {
+        setIsLiked(true);
+        props.onLike(true);
+      }).catch((error)=>{
+        console.log(error);
+      });
+    }catch(error){
+      dispatch(uiActions.showNotification({status: 'fail', message: error.message}));
+    }
   };
 
   const unlikePost = async () => {
@@ -55,6 +59,7 @@ const LikeButton = (props) => {
       
     } catch (error) {
       console.error("Error unliking post:", error);
+      dispatch(uiActions.showNotification({status: 'fail', message: error.message}));
     }
   };
 

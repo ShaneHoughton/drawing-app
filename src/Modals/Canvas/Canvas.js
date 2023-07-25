@@ -39,7 +39,7 @@ const Canvas = () => {
 
   const handleSaveImage = async () =>{
     if(imageTitle.length > 37){
-      alert("Your title is too long");
+      dispatch(uiActions.showNotification({status: 'fail', message: "Your title is too long."}))
       return
     }
     if(!canvas.current){
@@ -63,11 +63,12 @@ const Canvas = () => {
     };
 
     try{
-      await uploadBytes(imageRef, file, metadata);
+      await uploadBytes(imageRef+"jojoj", file, metadata);
       }
       catch(error){
         console.log(error);
         alert("There was an error uploading your image!");
+        dispatch(uiActions.showNotification({status: 'fail', message: "There was an error uploading your image!"}))
         return
       }
 
@@ -87,10 +88,13 @@ const Canvas = () => {
     dispatch(AddUploadedPost(docRef));
    
     dispatch(uiActions.closeCanvas()); 
+    dispatch(uiActions.showNotification({status: 'success', message: "Your masterpiece was submitted!"}))
   }
 
 
   return (
+  
+    
     <Modal onClose={()=>{dispatch(uiActions.closeCanvas())}}>
       <div className={classes.border}>
         <div className={classes['canvas-container']}>
@@ -119,6 +123,8 @@ const Canvas = () => {
         />
       </div>
     </Modal>
+  
+    
   );
 };
 

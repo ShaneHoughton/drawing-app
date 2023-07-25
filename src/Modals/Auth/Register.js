@@ -48,13 +48,14 @@ const Register = (props) => {
         //register the username
         uid: user.uid,
         username: username,
+        timestamp: new Date().getTime()
       });
 
       updateProfile(user, { displayName: username }); //set the username to the user
 
       await sendEmailVerification(user, actionCodeSettings); //send verification
       console.log("email sent");
-      alert("A verification email was sent to the entered address.");
+      dispatch(uiActions.showNotification({status: 'success', message:'A verification email was sent to the entered address.'}))
       dispatch(uiActions.closeAuth());
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {

@@ -1,9 +1,9 @@
-import { uiActions } from '../store/ui';
+import { uiActions } from '../../store/ui';
 import { useDispatch } from 'react-redux';
 import { Button } from "@mui/material";
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 
 const CreateButton = () => {
   const dispatch = useDispatch();

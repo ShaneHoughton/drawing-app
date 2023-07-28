@@ -63,7 +63,7 @@ const Canvas = () => {
     };
 
     try{
-      await uploadBytes(imageRef+"jojoj", file, metadata);
+      await uploadBytes(imageRef, file, metadata);
       }
       catch(error){
         console.log(error);

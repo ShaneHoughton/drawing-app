@@ -102,17 +102,17 @@ const Canvas = () => {
   
     <>
     {showCloseModal && <Modal onClose={toggleCloseModal}>
-      <form className={classes.signIn}>
+      <form>
         <h3>Are you sure you want to abandon this masterpiece?</h3>
         <div className={classes['button-row']}>
           <Button 
           onClick={()=>{
             toggleCloseModal();
             dispatch(uiActions.closeCanvas());
-          }} className={classes.signInButton}>Yes</Button>
+          }} className={classes.formButton}>Yes</Button>
           <Button 
           onClick={toggleCloseModal}
-          className={classes.signInButton}>No</Button>
+          className={classes.formButton}>No</Button>
         </div>
       </form>
     </Modal>}

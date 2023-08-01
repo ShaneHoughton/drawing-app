@@ -9,6 +9,7 @@ import {
   getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import ActionsButton from "./ActionsButton";
 
 const Post = (props) => {
   const [likes, setLikes] = useState(null);
@@ -50,6 +51,14 @@ const Post = (props) => {
           <div className={classes["labeled-button"]}>
             <LikeButton postId={postId} onLike={changeLike}/>
             <span>{likes} Likes</span>
+          </div>
+          <div className={classes["labeled-button"]}>
+
+          {/* <IconButton color='primary'>
+              <MoreVertIcon/>
+            </IconButton> */}
+
+            <ActionsButton />
           </div>
         </div>
       </div>

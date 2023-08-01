@@ -68,7 +68,7 @@ const SignIn = (props) => {
 
   return (
     <Modal onClose={() => dispatch(uiActions.closeAuth())}>
-      <form onSubmit={signInHandler} className={classes.signIn}>
+      <form onSubmit={signInHandler} >
         <h3>Sign in to your account</h3>
 
         <CustomTextfield
@@ -96,14 +96,14 @@ const SignIn = (props) => {
         )}
         {!reverify && (
           <>
-            <Button type="submit" className={classes.signInButton}>
+            <Button type="submit" className={classes.formButton}>
               Sign In
             </Button>
             <Button onClick={props.switchToRegister}>Register account</Button>
           </>
         )}
         {reverify && (
-          <Button onClick={resendEmailHandler} className={classes.signInButton}>
+          <Button onClick={resendEmailHandler} className={classes.formButton}>
             Resend email
           </Button>
         )}

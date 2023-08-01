@@ -86,7 +86,7 @@ const Register = (props) => {
 
   return (
     <Modal onClose={() => dispatch(uiActions.closeAuth())}>
-      <form onSubmit={registerHandler} className={classes.signIn}>
+      <form onSubmit={registerHandler} >
         <h3>Register an account</h3>
 
         <CustomTextfield
@@ -125,7 +125,7 @@ const Register = (props) => {
           </Typography>
         )}
 
-        <Button type="submit" className={classes.signInButton}>
+        <Button type="submit" className={classes.formButton}>
           Register
         </Button>
         <Button onClick={props.switchToSignIn}>Sign in</Button>

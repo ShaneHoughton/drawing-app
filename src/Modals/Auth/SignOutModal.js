@@ -27,11 +27,11 @@ const SignOutModal = () => {
 
   return (
     <Modal onClose={close}>
-    <form onSubmit={signOutHandler} className={classes.signIn}>
+    <form onSubmit={signOutHandler} >
       <h3>Are you sure you want to sign out?</h3>
       <div className={classes['button-row']}>
-        <Button type="submit" className={classes.signInButton}>Yes</Button>
-        <Button onClick={close} className={classes.signInButton}>No</Button>
+        <Button type="submit" className={classes.formButton}>Yes</Button>
+        <Button onClick={close} className={classes.formButton}>No</Button>
       </div>
     </form>
   </Modal>

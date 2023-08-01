@@ -38,7 +38,7 @@ form input{
   margin: 20px;
 }
 
-.signInButton{
+.formButton{
   margin-top: 2rem !important;
   width: 30%;
   color: #FEEFFE !important;
@@ -47,21 +47,21 @@ form input{
 
 
 @media (min-width: 1280px){
-  .signIn {    
+  form {    
     width: 30vw;
   }
 
 }
 
 @media (max-width: 1280px){
-  .signIn {
+  form {
     width: 60vw;
   }
 
 }
 
 @media (max-width: 540px){
-  .signIn {
+  form {
     
     width: 80vw;
   }

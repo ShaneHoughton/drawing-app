@@ -30,7 +30,9 @@
 }
 
 .post-buttons{
+  display: flex;
   flex-direction: row;
+  gap: 1rem;
   margin-top: -.5rem;
 }
 

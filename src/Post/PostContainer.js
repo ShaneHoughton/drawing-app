@@ -13,7 +13,6 @@ const PostContainer = (props) => {
   const query = props.query; // needs to be a firebase query
 
   useEffect(()=>{
-    console.log("refreshing")
     dispatch(loadPostData(query));
     }, [dispatch, query]);
   

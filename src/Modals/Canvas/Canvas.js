@@ -12,6 +12,8 @@ import classes from './Canvas.module.css';
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from '../../firebase';
 import TextField from '@mui/material/TextField';
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { AddUploadedPost } from '../../store/postActions';
 
 
@@ -83,7 +85,6 @@ const Canvas = () => {
       reported: false
     })
 
-    // dispatch(loadPostData())// ADD IT HERERERERER
     console.log(docRef)
     dispatch(AddUploadedPost(docRef));
    
@@ -95,7 +96,14 @@ const Canvas = () => {
   return (
   
     
-    <Modal onClose={()=>{dispatch(uiActions.closeCanvas())}}>
+    <Modal onClose={()=>{}}>
+      <IconButton 
+      color="secondary" 
+      aria-label="close" 
+      onClick={()=>dispatch(uiActions.closeCanvas())} 
+      sx={{position:'absolute'}}>
+        <CloseIcon/>
+      </IconButton>
       <div className={classes.border}>
         <div className={classes['canvas-container']}>
         <ReactSketchCanvas

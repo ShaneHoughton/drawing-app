@@ -64,7 +64,7 @@ const LikeButton = (props) => {
   };
 
   const handleLikeButton = () => {
-    if(!currentUser && !isUserVerified){
+    if(!isUserVerified){
       dispatch(uiActions.openAuth());
       return;
     }

@@ -41,17 +41,17 @@ const uiSlice = createSlice({
 
         loadPosts(state, action){
             if(!action.payload){
-                console.log("NOPE");
+                // console.log("NOPE");
                 action.payload = [];
             }
             state.posts = action.payload;
-            console.log("getting posts", state.posts);
+            // console.log("getting posts", state.posts);
             
         },
 
         addPost(state, action){
             state.posts.unshift(action.payload);
-            console.log("push post", state.posts);
+            // console.log("push post", state.posts);
         }
     }
 })

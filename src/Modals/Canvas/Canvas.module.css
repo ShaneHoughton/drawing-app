@@ -18,6 +18,56 @@
   width: 100% !important;
 }
 
+form{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #FEEFFE;
+  align-items: center;
+  gap: 10px;
+  border-radius: 14px;
+  text-align: center;
+  z-index: 500;
+}
+
+form input{
+  width: 10rem !important;
+}
+
+.button-row button{
+  margin: 20px;
+}
+
+.signInButton{
+  margin-top: 2rem !important;
+  width: 30%;
+  color: #FEEFFE !important;
+  background-color: #159A9C !important;
+}
+
+
+@media (min-width: 1280px){
+  .signIn {    
+    width: 30vw;
+  }
+
+}
+
+@media (max-width: 1280px){
+  .signIn {
+    width: 60vw;
+  }
+
+}
+
+@media (max-width: 540px){
+  .signIn {
+    
+    width: 80vw;
+  }
+
+}
+
 @media (min-width: 1280px){
   .canvas-container{
     width: 40vw;

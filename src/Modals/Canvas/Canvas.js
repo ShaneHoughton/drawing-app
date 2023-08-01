@@ -14,14 +14,19 @@ import { db } from '../../firebase';
 import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button } from "@mui/material";
 import { AddUploadedPost } from '../../store/postActions';
 
 
 const Canvas = () => {
-  const [imageTitle, setImageTitle] = useState('My Masterpiece')
+  const [imageTitle, setImageTitle] = useState('My Masterpiece');
+  const [showCloseModal, setShowCloseModal] = useState(false);
   const canvas = useRef();
   const dispatch = useDispatch();
   
+  const toggleCloseModal = () =>{
+    setShowCloseModal(!showCloseModal);
+  }
   
   const createImageFile = async (canvas) =>{
     const data = await canvas.current.exportImage('png');
@@ -95,12 +100,28 @@ const Canvas = () => {
 
   return (
   
-    
+    <>
+    {showCloseModal && <Modal onClose={toggleCloseModal}>
+      <form className={classes.signIn}>
+        <h3>Are you sure you want to abandon this masterpiece?</h3>
+        <div className={classes['button-row']}>
+          <Button 
+          onClick={()=>{
+            toggleCloseModal();
+            dispatch(uiActions.closeCanvas());
+          }} className={classes.signInButton}>Yes</Button>
+          <Button 
+          onClick={toggleCloseModal}
+          className={classes.signInButton}>No</Button>
+        </div>
+      </form>
+    </Modal>}
+
     <Modal onClose={()=>{}}>
       <IconButton 
       color="secondary" 
       aria-label="close" 
-      onClick={()=>dispatch(uiActions.closeCanvas())} 
+      onClick={toggleCloseModal} 
       sx={{position:'absolute'}}>
         <CloseIcon/>
       </IconButton>
@@ -131,7 +152,7 @@ const Canvas = () => {
         />
       </div>
     </Modal>
-  
+    </>
     
   );
 };

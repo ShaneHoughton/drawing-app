@@ -1,8 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ActionModal from '../Modals/Actions/ActionModal';
 
 const options = [
   '✏️ Rename',
@@ -11,9 +12,32 @@ const options = [
 ];
 
 
-export default function LongMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+const LongMenu = ()=> {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [showActionModal, setShowActionModal] = useState(false);
   const open = Boolean(anchorEl);
+
+  const handleAction = (action) =>{
+    switch (action) {
+      case options[0]:
+        console.log('Action is rename');
+        break;
+      case options[1]:
+        console.log('Action is report');
+        break;
+      case options[2]:
+        console.log('Action is delete');
+        handleClose();
+        setShowActionModal(true);
+        break;
+      default:
+        console.log('Action is unknown');
+  }
+  }
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,6 +47,7 @@ export default function LongMenu() {
 
   return (
     <div>
+      {showActionModal && <ActionModal onClose={()=>{setShowActionModal(false)}}/>}
       <IconButton
         aria-label="more"
         id="long-button"
@@ -41,10 +66,9 @@ export default function LongMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-       
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleAction(option)}>
             {option}
           </MenuItem>
         ))}
@@ -52,3 +76,5 @@ export default function LongMenu() {
     </div>
   );
 }
+
+export default LongMenu;

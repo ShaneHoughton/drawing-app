@@ -12,7 +12,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { actionCodeSettings } from "../../firebase";
-import classes from "./Auth.module.css";
+import classes from "../ModalForm.module.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Modal from "../Modal";
 

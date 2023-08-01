@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { uiActions } from '../../store/ui';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
-import classes from "./Auth.module.css";
+import classes from "../ModalForm.module.css";
 
 
 const SignOutModal = () => {

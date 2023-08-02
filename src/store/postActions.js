@@ -9,6 +9,7 @@ export const loadPostData = (query) => {
         getDocs(query)
           .then((querySnapshot) => {
             const items = [];
+            let lastDoc = null;
             querySnapshot.forEach((doc) => {
               // doc represents a document in the collection
               // You can access its data using doc.data()
@@ -16,8 +17,9 @@ export const loadPostData = (query) => {
                 id: doc.id,
                 ...doc.data()
               });
+              lastDoc = doc;
             });
-            resolve(items);
+            resolve({items, lastDoc});
           })
           .catch((error) => {
             reject(error);
@@ -26,8 +28,9 @@ export const loadPostData = (query) => {
     };
 
     try {
-      const items = await getItemsFromCollection();
+      const {items, lastDoc} = await getItemsFromCollection();
       dispatch(uiActions.loadPosts(items));
+      return lastDoc;
     } catch (error) {
       console.log('Error:', error);
     }

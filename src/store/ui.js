@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name:'ui',
-    initialState:{notification: null, scroll:true, showCanvas: false, showAuth: false, showSignOut: false, posts:[]}, //notification for error
+    initialState:{notification: null, scroll:true, showCanvas: false, showAuth: false, showSignOut: false, posts:[], lastDoc: null}, //notification for error
     reducers: {
         openCanvas(state){
             state.showCanvas = true;
@@ -61,6 +61,10 @@ const uiSlice = createSlice({
             state.posts = action.payload;
             // console.log("getting posts", state.posts);
             
+        },
+
+        setLastDoc(state, action){
+            state.lastDoc = action.payload;
         },
 
         addPost(state, action){

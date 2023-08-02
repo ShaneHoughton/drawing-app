@@ -9,10 +9,15 @@ import {
   getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import ActionsButton from "./ActionsButton";
+import ActionsMenu from "./ActionsMenu";
+import ActionModal from "../Modals/Actions/ActionModal";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../store/ui";
 
 const Post = (props) => {
   const [likes, setLikes] = useState(null);
+  const [actionState, setActionState] = useState(null);
+  const dispatch = useDispatch();
   const postId = props.id;
   const currentUser = auth.currentUser; 
 
@@ -22,11 +27,19 @@ const Post = (props) => {
     year: "numeric",
   });
 
+  const actionStateHandler = (state) =>{
+    setActionState(state);
+    if(state){
+      dispatch(uiActions.stopScroll())
+      return
+    }
+    dispatch(uiActions.allowScroll())
+  }
+
   const changeLike = (wasLiked) =>{//doing this so we can make one less request and change value on the UI.
     wasLiked ? setLikes(likes + 1) : setLikes(likes - 1); 
     if(likes < 0){setLikes(0)};
   }
-
   useEffect(() => {
     const getLikes = async () => {
       const coll = collection(db, "Likes");
@@ -40,6 +53,17 @@ const Post = (props) => {
 
   return (
     <>
+      {actionState && 
+      <ActionModal 
+      onClose={()=>{actionStateHandler(null)}}
+      creatorId={props.creatorId}
+      createdBy={props.createdBy}
+      postId={postId}
+      src={props.url} 
+      alt={props.alt} 
+      title={props.title}
+      option={actionState}/>
+      }
       <img src={props.url} alt={props.title} />
       <div className={classes['post-title']}>{props.title}</div>
       <div className={classes["post-items"]}>
@@ -54,11 +78,8 @@ const Post = (props) => {
           </div>
           <div className={classes["labeled-button"]}>
 
-          {/* <IconButton color='primary'>
-              <MoreVertIcon/>
-            </IconButton> */}
 
-            <ActionsButton />
+            <ActionsMenu creatorId={props.creatorId} actionStateHandler={actionStateHandler}/>
           </div>
         </div>
       </div>

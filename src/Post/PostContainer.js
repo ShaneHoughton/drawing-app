@@ -25,7 +25,8 @@ const PostContainer = (props) => {
         id={post.id} 
         url={post.imgLink} 
         title={post.title}
-        createdBy={post.creator} 
+        createdBy={post.creator}
+        creatorId={post.creatorId}
         timeCreated={post.date} />
       </li>
       ))}

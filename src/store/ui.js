@@ -2,32 +2,46 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name:'ui',
-    initialState:{notification: null, showCanvas: false, showAuth: false, showSignOut: false, posts:[]}, //notification for error
+    initialState:{notification: null, scroll:true, showCanvas: false, showAuth: false, showSignOut: false, posts:[]}, //notification for error
     reducers: {
         openCanvas(state){
             state.showCanvas = true;
+            state.scroll = false;
         },
 
         closeCanvas(state){
             state.showCanvas = false;
+            state.scroll = true;
         },
 
         openAuth(state){
             state.showAuth = true;
+            state.scroll = false;
         },
 
         closeAuth(state){
             state.showAuth = false;
+            state.scroll = true;
         },
 
         openSignOut(state){
             state.showSignOut = true;
+            state.scroll = false;
         },
 
         closeSignOut(state){
             state.showSignOut = false;
+            state.scroll = true;
         },
-        
+
+        stopScroll(state){
+            state.scroll = false;
+        },
+
+        allowScroll(state){
+            state.scroll = true;
+        },
+
         showNotification(state, action){
             state.notification = {
                 status : action.payload.status,

@@ -84,6 +84,7 @@ const Canvas = () => {
     const docRef = await addDoc(collection(db, "Posts"), {
       title: imageTitle,
       creator: createdBy,
+      creatorId: userId,
       date: timestamp,
       likedBy: [],
       imgLink: downloadURL,

@@ -1,8 +1,9 @@
 form{
   display: flex;
+  width: fit-content;
   flex-direction: column;
   padding: 1rem;
-  background-color: #FEEFFE;
+  background-color: #DEEFE7;
   align-items: center;
   gap: 10px;
   border-radius: 14px;
@@ -15,6 +16,13 @@ form input{
 
 .button-row button{
   margin: 20px;
+}
+
+.imageBox{
+  padding: 1rem;
+  width: min-content;
+  border-radius: 14px;
+  border: 1px solid #DEEFE7;
 }
 
 

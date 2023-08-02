@@ -14,7 +14,7 @@
 .content{
   margin: auto;
   margin-top: 5%;
-  width: fit-content;
+  width: max-content;
   z-index: 20;
 }
 

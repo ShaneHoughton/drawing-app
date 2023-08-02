@@ -23,7 +23,7 @@ const UserProfile = () => {
       } else {
         // User is signed out
         // Redirect to the homepage
-        navigate('/drawing-app');
+        navigate('/');
       }
     });
     localStorage.setItem('navPosition', 2);

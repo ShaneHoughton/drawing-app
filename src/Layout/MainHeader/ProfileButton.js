@@ -10,7 +10,7 @@ const ProfileButton = () => {
   const navigate = useNavigate();
   
   const handleClick = () =>{
-    navigate('/drawing-app/user');
+    navigate('/user');
   }
 
   useEffect(()=>{
@@ -21,7 +21,7 @@ const ProfileButton = () => {
       } else {
         // User is signed out
         // Redirect to the homepage
-        navigate('/drawing-app');
+        navigate('/');
       }
     });
     return () => unsubscribe();

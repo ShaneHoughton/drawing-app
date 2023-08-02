@@ -22,7 +22,7 @@ function App() {
   
   return (
     <>
-    <Router>
+    <Router basename="/">
       <Layout>
         <div className="App">
           {/* TODO: PUT AUTH IN HERE */}
@@ -30,8 +30,8 @@ function App() {
           {showAuth && <Auth/>}
           {showSignOut && <SignOutModal/>}
             <Routes>
-              <Route path="/drawing-app" element={<Home/>}/>
-              <Route path="/drawing-app/user" element={<UserProfile/>}/>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/user" element={<UserProfile/>}/>
             </Routes>
 
         </div>

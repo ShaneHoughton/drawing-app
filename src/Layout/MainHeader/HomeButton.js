@@ -6,7 +6,7 @@ const HomeButton = () => {
   const navigate = useNavigate();
 
   const handleClick = ()=>{
-    navigate('/drawing-app');
+    navigate('/');
   }
 
   return (

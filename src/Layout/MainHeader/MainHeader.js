@@ -45,7 +45,7 @@ const MainHeader = (props) => {
   return (
     <>
     <header className={classes.header}>
-      <h1 onClick={()=>{navigate('/drawing-app')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
+      <h1 onClick={()=>{navigate('/')}} style={{cursor:'pointer'}}>Sketchi.io</h1>
       <nav>
         <ul>
           <li>

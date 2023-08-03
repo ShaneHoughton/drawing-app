@@ -51,7 +51,7 @@ const  MobileNavBar = () => {
             case 0:
               console.log('Home icon clicked');
               setValue(newValue);
-              navigate('/drawing-app');
+              navigate('/');
               break;
             case 1:
               console.log('Create icon clicked');
@@ -67,7 +67,7 @@ const  MobileNavBar = () => {
                 dispatch(uiActions.openAuth());
               } else {
                 setValue(newValue);
-                navigate('/drawing-app/user');
+                navigate('/user');
               }
               
               break;

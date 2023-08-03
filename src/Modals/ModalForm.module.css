@@ -25,6 +25,28 @@ form input{
   border: 1px solid #DEEFE7;
 }
 
+@media (min-width: 1280px){
+  img{
+    width: 40vw;
+    height: 40vw;
+  }
+}
+
+
+@media (max-width: 820px){
+  img{
+    width: 80vw;
+    height: 80vw;
+  }
+}
+
+@media (max-height: 400px){
+  img{
+    width: 80vh;
+    height: 80vh;
+  }
+}
+
 
 @media (min-width: 1280px){
   form {    

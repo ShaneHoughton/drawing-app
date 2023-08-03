@@ -33,7 +33,7 @@ const RenamePost = (props) => {
         inputProps={{ maxLength: 37 }}
         style={{ width: '100%', backgroundColor: "rgba(255, 255, 255, 0.8)" }}
         id="outlined-required"
-        label="Title"
+        label="Updated Title"
         variant="filled"
         value={title}
         onChange={(e) => { setTitle(e.target.value); console.log(title) }}
@@ -41,7 +41,7 @@ const RenamePost = (props) => {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={handleRename}>
-                <SendIcon />
+                <SendIcon color='primary'/>
               </IconButton>
             </InputAdornment>
           ),

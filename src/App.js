@@ -22,9 +22,10 @@ function App() {
   
   return (
     <>
+    <div className="App">
     <Router>
       <Layout>
-        <div className="App">
+       
           {/* TODO: PUT AUTH IN HERE */}
           {showCanvas && <Canvas />}
           {showAuth && <Auth/>}
@@ -35,9 +36,10 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
 
-        </div>
+        
       </Layout>
     </Router>
+    </div>
     </>
   );
 }

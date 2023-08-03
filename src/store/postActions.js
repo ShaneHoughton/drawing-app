@@ -30,7 +30,7 @@ export const loadPostData = (query) => {
     try {
       const {items, lastDoc} = await getItemsFromCollection();
       dispatch(uiActions.loadPosts(items));
-      // return lastDoc;
+      return lastDoc;
     } catch (error) {
       console.log('Error:', error);
     }

@@ -15,11 +15,16 @@ const firebaseConfig = {
 };
 
 export const actionCodeSettings = {
-  url: 'https://shanehoughton.github.io/drawing-app/',
+  url: 'https://sketchi.io',
   handleCodeInApp: false
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig,{
+  authOptions: {
+    sameSite: 'None', // or 'Strict' or 'Lax' based on your requirements
+    secure: true, // true for cross-site requests
+  },
+});
 export const auth = getAuth();
 export const db = getFirestore(app);
 export const storage = getStorage(app);

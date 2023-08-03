@@ -42,9 +42,9 @@ const ActionsMenu = (props)=> {
   }, []);
   
   const options = [
-    auth.currentUser.uid === props.creatorId && {label: '✏️ Rename', value: 'RENAME'},
+    auth.currentUser?.uid === props.creatorId && {label: '✏️ Rename', value: 'RENAME'},
     {label: '⚠️ Report', value:'REPORT'},
-    auth.currentUser.uid === props.creatorId && {label:'🗑️ Delete', value: 'DELETE'}
+    auth.currentUser?.uid === props.creatorId && {label:'🗑️ Delete', value: 'DELETE'}
   ].filter(Boolean);
 
   return (

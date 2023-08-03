@@ -79,7 +79,7 @@ const Post = (props) => {
           <div className={classes["labeled-button"]}>
 
 
-            {/* <ActionsMenu creatorId={props.creatorId} actionStateHandler={actionStateHandler}/> */}
+            <ActionsMenu creatorId={props.creatorId} actionStateHandler={actionStateHandler}/>
           </div>
         </div>
       </div>

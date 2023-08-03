@@ -22,14 +22,14 @@ function App() {
   
   return (
     <>
-    <Router basename="/">
+    <Router>
       <Layout>
         <div className="App">
           {/* TODO: PUT AUTH IN HERE */}
           {showCanvas && <Canvas />}
           {showAuth && <Auth/>}
           {showSignOut && <SignOutModal/>}
-            <Routes>
+            <Routes basename="/">
               <Route path="/" element={<Home/>}/>
               <Route path="/user" element={<UserProfile/>}/>
               <Route path="*" element={<Navigate to="/" />} />

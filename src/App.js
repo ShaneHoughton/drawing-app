@@ -3,7 +3,7 @@ import Canvas from './Modals/Canvas/Canvas';
 import Auth from "./Modals/Auth/AuthModals";
 import SignOutModal from "./Modals/Auth/SignOutModal";
 import {useSelector} from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from "./Pages/Home";
 import UserProfile from "./Pages/UserProfile";
 

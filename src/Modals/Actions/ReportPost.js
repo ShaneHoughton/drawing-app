@@ -33,6 +33,7 @@ const ReportPost =(props)=> {
         imageLink: props.src,
         reason: selectedReason,
         reporter: props.user.displayName,
+        reporterEmail: props.user.email,
         reporterId: props.user.uid,
         title: props.title,
         timestamp: new Date().getTime()

@@ -50,6 +50,7 @@ const  MobileNavBar = () => {
           switch (newValue) {
             case 0:
               console.log('Home icon clicked');
+              dispatch(uiActions.clearPosts());
               setValue(newValue);
               navigate('/');
               break;
@@ -66,6 +67,7 @@ const  MobileNavBar = () => {
               if (!isUserVerified) {
                 dispatch(uiActions.openAuth());
               } else {
+                dispatch(uiActions.clearPosts());
                 setValue(newValue);
                 navigate('/user');
               }

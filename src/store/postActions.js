@@ -3,32 +3,19 @@ import { getDocs, getDoc } from "firebase/firestore";
 
 export const loadPostData = (query) => {
   return async (dispatch) => {
-    
-    const getItemsFromCollection = () => {
-      return new Promise((resolve, reject) => {
-        getDocs(query)
-          .then((querySnapshot) => {
-            const items = [];
-            let lastDoc = null;
-            querySnapshot.forEach((doc) => {
-              // doc represents a document in the collection
-              // You can access its data using doc.data()
-              items.push({
-                id: doc.id,
-                ...doc.data()
-              });
-              lastDoc = doc;
-            });
-            resolve({items, lastDoc});
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    };
-
     try {
-      const {items, lastDoc} = await getItemsFromCollection();
+      const querySnapshot = await getDocs(query);
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+      console.log(lastDoc)
+      console.log(items);
       dispatch(uiActions.loadPosts(items));
       return lastDoc;
     } catch (error) {
@@ -37,12 +24,14 @@ export const loadPostData = (query) => {
   };
 };
 
+
+
+
 export const AddUploadedPost = (docRef) =>{
   return async (dispatch) => {
     const addItem = (docRef) =>{
       return new Promise((resolve, reject) => {
         getDoc(docRef).then((docSnap)=>{
-          // console.log(">", docSnap.data())
           resolve({id:docSnap.id, ...docSnap.data()});
         }).catch((error)=>{
           console.log(error);

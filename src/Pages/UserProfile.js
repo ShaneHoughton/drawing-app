@@ -15,14 +15,15 @@ const UserProfile = () => {
   
   const collectionRef = collection(db, "Posts");
   const userPostQuery = query(collectionRef, where("creator", "==", username), orderBy('date', 'desc'));
+
   useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in
+        // user is signed in
         setUsername(user.displayName);
       } else {
-        // User is signed out
-        // Redirect to the homepage
+        // user is signed out
+        // redirect to the homepage
         navigate('/');
       }
     });
@@ -37,7 +38,7 @@ const UserProfile = () => {
     return <LoadingSpinner />
   }
   return (
-    <PostContainer query={userPostQuery}/>
+    <PostContainer initQuery={userPostQuery} />
   )
 }
 

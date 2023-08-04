@@ -58,9 +58,14 @@ const uiSlice = createSlice({
                 // console.log("NOPE");
                 action.payload = [];
             }
-            state.posts = action.payload;
+            const newposts = [...state.posts, ...action.payload]
+            state.posts = newposts;
             // console.log("getting posts", state.posts);
             
+        },
+
+        clearPosts(state){
+            state.posts = [];
         },
 
         setLastDoc(state, action){

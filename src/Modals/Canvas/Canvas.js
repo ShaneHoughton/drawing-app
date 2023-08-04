@@ -21,6 +21,7 @@ import { AddUploadedPost } from '../../store/postActions';
 const Canvas = () => {
   const [imageTitle, setImageTitle] = useState('My Masterpiece');
   const [showCloseModal, setShowCloseModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const canvas = useRef();
   const dispatch = useDispatch();
   
@@ -53,7 +54,6 @@ const Canvas = () => {
       return
     }
 
-    console.log(auth.currentUser);
     const userId = auth.currentUser.uid; // Replace with actual user ID
     const createdBy = auth.currentUser.displayName;
     const timestamp = new Date().getTime();
@@ -70,12 +70,13 @@ const Canvas = () => {
     };
 
     try{
+      setIsUploading(true);
       await uploadBytes(imageRef, file, metadata);
       }
       catch(error){
         console.log(error);
         alert("There was an error uploading your image!");
-        dispatch(uiActions.showNotification({status: 'fail', message: "There was an error uploading your image!"}))
+        dispatch(uiActions.showNotification({status: 'fail', message: "There was an error uploading your image!"}));
         return
       }
 
@@ -94,13 +95,12 @@ const Canvas = () => {
     console.log(docRef)
     dispatch(AddUploadedPost(docRef));
    
-    dispatch(uiActions.closeCanvas()); 
+    dispatch(uiActions.closeCanvas());
+    setIsUploading(false); 
     dispatch(uiActions.showNotification({status: 'success', message: "Your masterpiece was submitted!"}))
   }
 
-
   return (
-  
     <>
     {showCloseModal && <Modal onClose={toggleCloseModal}>
       <form>
@@ -126,7 +126,7 @@ const Canvas = () => {
       sx={{position:'absolute'}}>
         <CloseIcon/>
       </IconButton>
-      <div className={classes.border}>
+        <div className={classes.border}>
         <div className={classes['canvas-container']}>
         <ReactSketchCanvas
           /* Add your canvas props here */
@@ -136,11 +136,14 @@ const Canvas = () => {
         />
       </div>
       <div className={classes['canvas-tools']}>
-      <ButtonRow send={handleSaveImage} 
+      {!isUploading &&
+      <ButtonRow 
+      send={handleSaveImage} 
       clear={() => canvas.current.resetCanvas()}
       undo={() => canvas.current.undo()}
       redo={() => canvas.current.redo()}
       />
+      }
       </div>
       <TextField
           inputProps={{ maxLength: 37 }}

@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,6 +16,7 @@ const  MobileNavBar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navStyle = { color: 'rgba(222, 239, 231, .6)', '&.Mui-selected': { color: '#FFFFFF', fontWeight:'bold' }};
   const boxStyle = { width: "100%", position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10, borderTop:"#B4BEC9 .5px solid" };
@@ -50,9 +51,11 @@ const  MobileNavBar = () => {
           switch (newValue) {
             case 0:
               console.log('Home icon clicked');
-              dispatch(uiActions.clearPosts());
-              setValue(newValue);
-              navigate('/');
+              if (location.pathname !== '/') {
+                dispatch(uiActions.clearPosts());
+                setValue(newValue);
+                navigate('/');
+              }
               break;
             case 1:
               console.log('Create icon clicked');
@@ -67,9 +70,11 @@ const  MobileNavBar = () => {
               if (!isUserVerified) {
                 dispatch(uiActions.openAuth());
               } else {
-                dispatch(uiActions.clearPosts());
-                setValue(newValue);
-                navigate('/user');
+                if (location.pathname !== '/user') {
+                  dispatch(uiActions.clearPosts());
+                  setValue(newValue);
+                  navigate('/user');
+                }
               }
               
               break;

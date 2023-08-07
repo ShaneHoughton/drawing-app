@@ -50,8 +50,10 @@ const MainHeader = (props) => {
     <header className={classes.header}>
       <h1 
       onClick={()=>{
-        navigate('/');
-        dispatch(uiActions.clearPosts());
+        if (location.pathname !== '/') {
+          dispatch(uiActions.clearPosts());
+          navigate('/');
+        }
       }}
        style={{cursor:'pointer'}}>Sketchi.io</h1>
       <nav>

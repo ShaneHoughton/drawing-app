@@ -89,7 +89,8 @@ const Canvas = () => {
       date: timestamp,
       likedBy: [],
       imgLink: downloadURL,
-      reported: false
+      reported: false,
+      fullPath: imageRef.fullPath
     })
 
     console.log(docRef)

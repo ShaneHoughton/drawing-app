@@ -6,7 +6,7 @@ import HomeButton from './HomeButton';
 import classes from './MainHeader.module.css';
 import { auth } from "../../firebase";
 import {useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Notification from '../Notification/NotificationBanner';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ const MainHeader = (props) => {
   const [signedIn, setSignedIn] = useState(auth.currentUser !== null);
   const navigate = useNavigate()
   const dispatch = useDispatch();
+  const location = useLocation();
   useEffect(()=>{
     const updateSignedIn = auth.onAuthStateChanged((user) => {
       setSignedIn(user !== null && user.emailVerified);

@@ -4,8 +4,3 @@
   flex-direction: row;
   justify-content: space-around;  
 }
-
-.buttonRow button{
-  border-radius: 30px;
-  color: green
-}

@@ -4,23 +4,24 @@ import Send from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Undo from '@mui/icons-material/Undo';
 import Redo from '@mui/icons-material/Redo';
+import classes from './ButtonRow.module.css';
 
 const ButtonRow = (props) => {
   return (
-    <>
+    <div className={classes.buttonRow}>
       <IconButton color="primary" aria-label="send" onClick={props.send}>
-        <Send />
+        <Send fontSize='large'/>
       </IconButton>
       <IconButton color="secondary" aria-label="clear" onClick={props.clear}>
-        <DeleteIcon />
+        <DeleteIcon fontSize='large'/>
       </IconButton>
       <IconButton color="secondary" aria-label="undo" onClick={props.undo}>
-        <Undo />
+        <Undo fontSize='large'/>
       </IconButton>
       <IconButton color="secondary" aria-label="redo" onClick={props.redo}>
-        <Redo />
+        <Redo fontSize='large'/>
       </IconButton>
-    </>
+    </div>
   )
 }
 

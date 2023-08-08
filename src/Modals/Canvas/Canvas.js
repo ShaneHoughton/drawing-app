@@ -16,14 +16,24 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
 import { AddUploadedPost } from '../../store/postActions';
+import { HuePicker } from 'react-color'
+
 
 
 const Canvas = () => {
   const [imageTitle, setImageTitle] = useState('My Masterpiece');
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [color, setColor] = useState("#0000ff");
+
+ 
   const canvas = useRef();
   const dispatch = useDispatch();
+
+  const handleColorChange = (color, event) => {
+    setColor(color.hex);
+  };
+
   
   const toggleCloseModal = () =>{
     setShowCloseModal(!showCloseModal);
@@ -127,15 +137,15 @@ const Canvas = () => {
       sx={{position:'absolute'}}>
         <CloseIcon/>
       </IconButton>
-        <div className={classes.border}>
-        <div className={classes['canvas-container']}>
-        <ReactSketchCanvas
+      <div className={classes.border}>
+
+        <ReactSketchCanvas className={classes['canvas-container']}
           /* Add your canvas props here */
           strokeWidth={4}
-          strokeColor="blue"
+          strokeColor={color}
           ref={canvas}
         />
-      </div>
+     
       <div className={classes['canvas-tools']}>
       {!isUploading &&
       <ButtonRow 
@@ -145,6 +155,8 @@ const Canvas = () => {
       redo={() => canvas.current.redo()}
       />
       }
+      <HuePicker color={color} onChange={handleColorChange} />
+      
       </div>
       <TextField
           inputProps={{ maxLength: 37 }}
